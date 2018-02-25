@@ -1,0 +1,32 @@
+
+body {
+height: 100%;
+padding: 0;
+margin: 0;
+}
+html {
+height: 100%;
+padding: 0;
+margin: 0;
+}
+#rect1 {
+background-color: #666666;
+float: left;
+width: 49% ;
+height: 50%;
+}
+#rect2 {
+background-color: #999999;
+height: 50%;
+}
+#rect3 {
+background-color: #999999;
+float: left;
+width: 49% ;
+height: 50%;
+}
+#rect4 {
+background-color: #666666;
+float: right;
+height: 50%;
+}
