@@ -7,7 +7,8 @@ var div = '#word-cloud';
 var cloud = d3.layout.cloud();
 
    // var fill = d3.scale.category20();
-  var fill = d3.scaleOrdinal(d3.schemeCategory20);
+ // var fill = d3.scaleOrdinal(d3.schemeCategory20);
+  
     var layout = cloud
         .size([500, 500])
         .words([
@@ -35,7 +36,8 @@ var cloud = d3.layout.cloud();
         .enter().append("text")
         .style("font-size", function(d) { return d.size + "px"; })
         .style("font-family", "Impact")
-        .style("fill", function(d, i) { return fill(i); })
+       // .style("fill", function(d, i) { return fill(i); })
+       .style("fill", 'red' )
         .attr("text-anchor", "middle")
         .attr("transform", function(d) {
             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
