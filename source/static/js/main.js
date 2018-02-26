@@ -16,6 +16,6 @@ if(error){ console.log(error); }
 
 //console.log(USvideos[0]);
 wordCloud = new wordCloud();
-tm = new tm();
+tm = new tm(USvideos,US_category_id);
 
 }
