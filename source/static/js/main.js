@@ -10,10 +10,12 @@ queue()
 var wordCloud;
 
 function draw(error, USvideos, CAvideos, GBvideos, 
-	US_category_id, CA_category_id ,GB_category_id){
+	US_category_id, CA_category_id, GB_category_id){
 if(error){ console.log(error); }
 
 //console.log(USvideos[0]);
-wordCloud = new wordCloud();
+wordCloud = new wordCloud(USvideos, CAvideos, GBvideos, 
+	US_category_id, CA_category_id, GB_category_id);
+
 
 }
