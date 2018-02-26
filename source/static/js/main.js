@@ -14,14 +14,18 @@ function draw(error, USvideos, CAvideos, GBvideos,
 	US_category_id, CA_category_id, GB_category_id){
 if(error){ console.log(error); }
 
+
 	USvideos = transformData(USvideos);
 	CAvideos = transformData(CAvideos);
 	GBvideos = transformData(GBvideos);
 
+
+tm = new tm(USvideos,US_category_id);
+
+
 	wordCloud = new wordCloud(USvideos, CAvideos, GBvideos, 
 	US_category_id, CA_category_id, GB_category_id);
-
-	tm = new tm();
+	
 
 }
 
