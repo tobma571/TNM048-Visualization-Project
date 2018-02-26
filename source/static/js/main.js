@@ -8,6 +8,7 @@ queue()
   .await(draw);
 
 var wordCloud;
+var tm;
 
 function draw(error, USvideos, CAvideos, GBvideos, 
 	US_category_id, CA_category_id ,GB_category_id){
@@ -15,5 +16,6 @@ if(error){ console.log(error); }
 
 //console.log(USvideos[0]);
 wordCloud = new wordCloud();
+tm = new tm();
 
 }
