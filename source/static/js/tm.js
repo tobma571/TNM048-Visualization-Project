@@ -39,13 +39,13 @@ function tm(data,data_category)
     });
 
 
-    var stratify = d3.stratify()
+    /*var stratify = d3.stratify()
         .parentId(function (d) {
             return d.title;
         })
 
     var root = stratify(categories)
         .sum(function(d) { return d.rate; })
-        .sort(function(a, b) { return b.height - a.height || b.value - a.value; });
+        .sort(function(a, b) { return b.height - a.height || b.value - a.value; });*/
 
 };
