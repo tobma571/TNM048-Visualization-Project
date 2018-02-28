@@ -14,8 +14,28 @@
 <body>
 
         <div class="base">
-          <!-- Menu bar -->
-          <div id="menu"></div>
+          <!-- Navigation bar with dropdown menus-->
+          <div class="navbar">
+            <div class="dropdown">
+<!--               <button onclick="myFunction2()" class="dropbtn">Filter by country</button> -->
+              <button class="dropbtn">Filter by country</button>
+              <div id="countryDropdown" class="dropdown-content">
+                <a id="US" value="USvideos" onclick="return clickUS()">USA</a>
+                <a id="CA" value="CAvideos" onclick="return clickCA()">Canada</a>
+                <a id="GB" value="GBvideos" onclick="return clickGB()">Great Britain</a>
+              </div>
+            </div>
+            <div class="dropdown">
+<!--               <button onclick="myFunction2()" class="dropbtn">Filter by country</button> -->
+              <button class="dropbtn">Filter by time</button>
+              <div id="timeDropdown" class="dropdown-content">
+                <a id="1week" value="1week" onclick="return clickTime1()">1 week</a>
+                <a id="2week" value="2week" onclick="return clickTime2()">2 weeks</a>
+                <a id="1month" value="1month" onclick="return clickTime3()">1 month</a>
+                <a id="3month" value="3month" onclick="return clickTime4()">3 months</a>
+              </div>
+            </div>
+          </div>
 
           <!-- Treemap plot -->
           <div id="treemap"></div>
@@ -38,8 +58,9 @@
   <!-- Modules -->
 
   <script src='./static/js/wordCloud.js' type='text/javascript'></script>
-    <script src='./static/js/tm.js' type='text/javascript'></script>
+  <script src='./static/js/tm.js' type='text/javascript'></script>
   <script src='./static/js/main.js' type='text/javascript'></script>
+  <!-- <script src='./static/js/onClick.js' type='text/javascript'></script> -->
 
 </body>
 </html>
