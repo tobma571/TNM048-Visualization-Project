@@ -1,7 +1,7 @@
 
 
-function wordCloud(USvideos, CAvideos, GBvideos, 
-	US_category_id, CA_category_id ,GB_category_id) {
+function wordCloud(data, 
+	US_category_id) {
 
 var div = '#word-cloud';
 
@@ -10,7 +10,7 @@ var cloud = d3.layout.cloud();
 var parentWidth = $(div).width();
 var parentHeight = $(div).height();
 
-var tagFreqResult = tagFreq(USvideos);
+var tagFreqResult = tagFreq(data);
 var tagMap = tagFreqResult[0];
 var tagKeys = tagFreqResult[1];
 var Warray = [];
@@ -86,6 +86,7 @@ var fill = d3.scaleOrdinal(d3.schemeCategory20);
         d3.select(div).append("svg")
         .attr("width", layout.size()[0])
         .attr("height", layout.size()[1])
+        .attr("id", "wcSVG")
         .append("g")
         .attr("transform", "translate(" + 0 + "," + MaxSize/1.2 + ")") //
         .selectAll("text")

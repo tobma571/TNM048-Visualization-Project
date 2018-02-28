@@ -55,17 +55,22 @@ function filterData() {
 
 function clickUS() {
   	country = document.getElementById('US').getAttribute('value');
-  	$( "#treemap" ).empty();
+  //	$( "#treemap" ).empty();
 
   	// if svg element is not empty, remove()
+  	if(!document.getElementById('wcSVG') != null) {
+  		document.getElementById('wcSVG').remove();
+  	}
+  	//console.log(document.getElementById('wcSVG'));  == NULL
  	d3.csv("static/data/youtube-new/USvideos.csv", function(data) {
   	USvideos = new transformData(data);
-  	delete wordCloud;
+  //	delete wordCloud;
   	wordCloud = new wordCloud(USvideos, US_category);
 	});
  
 
 }
+
 function clickCA() {
   country = document.getElementById('CA').getAttribute('value');
   $( "#treemap" ).empty();
