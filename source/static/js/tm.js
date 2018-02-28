@@ -24,7 +24,7 @@ function tm(data,data_category)
         .style("opacity", 0);
 
     var treeMap = d3.treemap()
-        .tile(d3.treemapResquarify.ratio(1.5))
+        .tile(d3.treemapResquarify.ratio(1))
         .size([width,height])
         .paddingInner(1)
         .round(true);

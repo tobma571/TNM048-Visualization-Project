@@ -28,7 +28,7 @@ if(error){ console.log(error)};
 	GB_category = GB_category_id;
 
   	wordcloud = new wordCloud(USvideos, US_category_id);
-	//tm = new tm(USvideos,US_category_id);
+	tm = new tm(USvideos,US_category_id);
 
 }
 
