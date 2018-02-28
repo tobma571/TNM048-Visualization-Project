@@ -7,36 +7,76 @@ var div = '#word-cloud';
 
 var cloud = d3.layout.cloud();
 
+var parentWidth = $(div).width();
+var parentHeight = $(div).height();
+
 var tagFreqResult = tagFreq(USvideos);
 var tagMap = tagFreqResult[0];
 var tagKeys = tagFreqResult[1];
 var Warray = [];
 var wordSizes = [];
 var wordTranslations = [];
+var wordTranslationsY = [];
 
-for (var i = 0; i < 20; i++) {
+let totTextHeight = 0;
+let totWordRow = 0;
+let nrOfWords = 120;
+let MaxSize = 100;
 
-  Warray[i] = tagKeys[i];
-  wordSizes[i] = tagMap[tagKeys[i]]/tagMap[tagKeys[0]]*100;
+// Set sizes for all words
+for (var j = 0; j < nrOfWords; j++) {
 
-    if(i > 0)
-        wordTranslations[i] = wordTranslations[i-1] + wordSizes[i];
-    else
-        wordTranslations[i] = -wordSizes[i];
+    Warray[j] = tagKeys[j];
+    wordSizes[j] = tagMap[tagKeys[j]]/tagMap[tagKeys[0]]*MaxSize;
+
 }
+
+// Set arrays for translating words
+for (var i = 0; i < nrOfWords; i++) {
+
+    if(totWordRow < parentWidth) {
+
+        if(i > 0){
+            wordTranslations[i] = wordTranslations[i-1] + getTextWidth(tagKeys[i-1], wordSizes[i-1] , 'Impact');   
+            wordTranslationsY[i] = wordTranslationsY[i-1];
+        }    
+        else{
+            wordTranslations[i] = 0;
+            wordTranslationsY[i] = 0;  
+        }
+
+        totWordRow += getTextWidth(tagKeys[i], wordSizes[i] , 'Impact') + getTextWidth(tagKeys[i+1], wordSizes[i+1] , 'Impact');
+        
+    }
+    else {
+
+        totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
+        wordTranslations[i] = 0;
+        totTextHeight = wordTranslationsY[i-1];
+        wordTranslationsY[i] = wordSizes[i] + totTextHeight;
+    }
+
+}
+
+// Return width of a single word
+function getTextWidth(text, fontSize, fontFace) {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    context.font = fontSize + 'px ' + fontFace;
+    return context.measureText(text).width;
+} 
 
 var fill = d3.scaleOrdinal(d3.schemeCategory20);
 
     var layout = cloud
-        .size([500, 500])
+        .size([parentWidth, parentHeight])
         .words(Warray.map(function(d) {
-     // return {text: d, size: 10 + Math.random() * 90, test: "haha"};
-        return {text: d, size: 100, test: "haha"};
+        return {text: d, size: 5, test: "haha"};
         }))
         .padding(5)
      // .rotate(function() { return ~~(Math.random() * 2) * 90; })
         .font("Impact")
-        .fontSize(function(d,i) { return wordSizes[i]; }) // prev: d.size
+        .fontSize(function(d,i) { return wordSizes[i]; })
         .on("end", draw);
 
     layout.start();
@@ -47,19 +87,16 @@ var fill = d3.scaleOrdinal(d3.schemeCategory20);
         .attr("width", layout.size()[0])
         .attr("height", layout.size()[1])
         .append("g")
-        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+        .attr("transform", "translate(" + 0 + "," + MaxSize/1.2 + ")") //
         .selectAll("text")
         .data(words)
         .enter().append("text")
         .style("font-size", function(d) { return d.size + "px"; })
         .style("font-family", "Impact")
         .style("fill", function(d, i) { return fill(i); })
-      // .style("fill", 'red' )
-        .attr("text-anchor", "middle")
+        .attr("text-anchor", "start")
         .attr("transform", function(d,i) {
-           // return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-       //    return "translate(" + [d.x, d.y] + ")";
-        return "translate(" +  [0, wordTranslations[i]] + ")";
+        return "translate(" + wordTranslations[i] + "," + wordTranslationsY[i] + ")";
         })
         .text(function(d) { return d.text; });
     }
@@ -68,7 +105,7 @@ var fill = d3.scaleOrdinal(d3.schemeCategory20);
     function tagFreq(tagData) {
         
         tagArray = [];
-        noSamples = 2000;
+        noSamples = 1000;
 
         // Concatinates the tags of chosen number of samples into a single string.
         for(let j = 0; j < noSamples; j++) {
