@@ -122,7 +122,6 @@ function tm(data,data_category)
         var dx = (value.x1 - value.x0), dy = (value.y1 - value.y0), kx = width/dx, ky = height/dy;
         x.domain([value.x0, value.x1]);
         y.domain([value.y0, value.y1]);
-    console.log(value);
 
         var t = svg.selectAll("g.cell").transition()
             .duration(d3.event.altKey ? 7500 : 750)
