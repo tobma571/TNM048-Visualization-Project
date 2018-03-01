@@ -23,6 +23,10 @@ let totWordRow = 0;
 let nrOfWords = 120;
 let MaxSize = 100;
 
+    var margin = {top: 0, right: 3, bottom: 0, left: 0},
+        parentwidth = parentWidth - margin.left - margin.right,
+        parentheight = parentHeight - margin.top - margin.bottom;
+
 // Set sizes for all words
 for (var j = 0; j < nrOfWords; j++) {
 
@@ -34,7 +38,7 @@ for (var j = 0; j < nrOfWords; j++) {
 // Set arrays for translating words
 for (var i = 0; i < nrOfWords; i++) {
 
-    if(totWordRow < parentWidth) {
+    if(totWordRow < parentWidth+200) {
 
         if(i > 0){
             wordTranslations[i] = wordTranslations[i-1] + getTextWidth(tagKeys[i-1], wordSizes[i-1] , 'Impact');   
@@ -49,11 +53,17 @@ for (var i = 0; i < nrOfWords; i++) {
         
     }
     else {
-
         totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
         wordTranslations[i] = 0;
         totTextHeight = wordTranslationsY[i-1];
         wordTranslationsY[i] = wordSizes[i] + totTextHeight;
+
+        if(wordTranslationsY[i] > 100) {
+            Warray.splice(i, Warray.length-i);
+            wordSizes.splice(i, wordSizes.length-i);
+            break;
+        }
+              
     }
 
 }

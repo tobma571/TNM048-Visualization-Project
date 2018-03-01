@@ -6,13 +6,21 @@
 
     <title>YouTube TrendViz</title>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+
     <link rel="stylesheet" href="./static/css/style-sheet.css"> 
-    <link rel="stylesheet" href="./static/css/bootstrap.min.css"> 
 
 
 </head>
 <body>
 
+<script>
+function showDiv() {
+   document.getElementById('myDiv').style.display = "block";
+}
+</script>
         <div class="base">
           <!-- Navigation bar with dropdown menus-->
           <div class="navbar">
@@ -35,7 +43,121 @@
                 <a id="3month" value="3month" onclick="return clickTime4()">3 months</a>
               </div>
             </div>
+
+<!-- Filter button dropdown -->
+            
+      <div class="FilterMultiDrop">                                       
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Filter
+          <span class="caret"></span></button>
+
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+              <a class="test" tabindex="-1" href="#">Filter by country <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                    <div id="countryDropdown">
+                      <li><a id="US" value="USvideos" onclick="return clickUS()">USA</a></li>
+                      <li><a id="CA" value="CAvideos" onclick="return clickCA()">Canada</a></li>
+                      <li><a id="GB" value="GBvideos" onclick="return clickGB()">Great Britain</a></li>
+                    </div>
+              </ul>
+              <a class="test" tabindex="-1" href="#">Filter by time <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                      <div id="timeDropdown">
+                      <li><a id="1week" value="1week" onclick="clickTime1(); clickTime2();">1 week</a></li>
+                      <li><a id="2week" value="2week" onclick="return clickTime2()">2 weeks</a></li>
+                      <li><a id="1month" value="1month" onclick="return clickTime3()">1 month</a></li>
+                      <li><a id="3month" value="3month" onclick="return clickTime4()">3 months</a></li>
+                    </div>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>  
+
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
+
+          <h1 class="Headline">Youtube Trends</h1>
           </div>
+
+<div>
+  <div class = "treeTextDiv">
+  <p id="treeText">Treemap</p>
+  </div>
+    <!--   Information Button   -->
+      <div id="InfoModal" class="treeInfo">
+      <!-- Trigger the modal with a button -->
+      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+
+        <div class="modal-dialog"> 
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">WordCloud description:</h4>
+            </div>
+            <div class="modal-body">
+              <p>The wordcloud displays the most popular tags in the trending videos on youtube. 
+                You can filter the results by country and time,
+                 and also by category, which is done by picking one in the Treemap to the left.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+  <div class = "tagTextDiv">
+  <p id="tagText">WordCloud</p>
+  </div>
+    <!--   Information Button   -->
+      <div id="InfoModal" class="tagInfo">
+      <!-- Trigger the modal with a button -->
+      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+
+        <div class="modal-dialog"> 
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Treemap description:</h4>
+            </div>
+            <div class="modal-body">
+              <p>The treemap displays the distribution of the most popular genres in youtube videos. 
+                The largest box shows thereby the most pupular genre. By clicking one of the boxes....</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+
+
+
 
           <!-- Treemap plot -->
           <div id="treemap"></div>
@@ -44,10 +166,10 @@
           <div id="word-cloud"></div>
         </div>
 
-   <!-- Lib -->
+   <!-- Lib 
 
   <script src="./static/lib/jquery.min.js"></script>
-  <script src="./static/lib/bootstrap.min.js"></script>
+  <script src="./static/lib/bootstrap.min.js"></script> -->
   <script src="./static/lib/d3.min.js"></script>
 <!--   <script src="./static/lib/d3.js"></script>-->
 

@@ -12,10 +12,7 @@ queue()
 // var time, country;
  var USvideos, CAvideos, GBvideos;
  var US_category, CA_category, GB_category;
-
-
-
-
+ 
 function draw(error, USvideos, CAvideos, GBvideos, 
 	US_category_id, CA_category_id, GB_category_id){
 if(error){ console.log(error)};
