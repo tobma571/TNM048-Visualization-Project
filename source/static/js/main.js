@@ -27,7 +27,7 @@ if(error){ console.log(error)};
 	CA_category = CA_category_id;
 	GB_category = GB_category_id;
 
-  	wordcloud = new wordCloud(USvideos, US_category_id);
+  wordcloud = new wordCloud(USvideos, US_category_id);
 	tm = new tm(USvideos,US_category_id);
 
 }
@@ -39,10 +39,6 @@ function transformData(data){
 				+ Math.log(d.comment_count); 
 	})
 	return data;
-}
-
-function filterData() {
-
 }
 
 function clickUS() {
