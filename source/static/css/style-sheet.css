@@ -77,11 +77,11 @@ margin: 0;
 #tagText {
     font-size: 25px; 
     color:black;
-    position: relative; top: 5px; left: 1080px;
+    position: relative; top: 5px; left: 1075px;
     }
 
 .tagInfo {
-    position: relative; top: 0px; left: 1083px;
+    position: relative; top: 0px; left: 1078px;
     display: inline-block;
 }
 

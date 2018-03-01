@@ -1,31 +1,46 @@
 queue()
-  .defer(d3.csv,'static/data/youtube-new/USvideos.csv')
-  .defer(d3.csv,'static/data/youtube-new/CAvideos.csv')
-  .defer(d3.csv,'static/data/youtube-new/GBvideos.csv')
   .defer(d3.json,'static/data/youtube-new/US_category_id.json')
   .defer(d3.json,'static/data/youtube-new/CA_category_id.json')
   .defer(d3.json,'static/data/youtube-new/GB_category_id.json')
-  .await(draw);
+  .await(readData);
 
 // var wordcloud;
 // var tm;
 // var time, country;
  var USvideos, CAvideos, GBvideos;
  var US_category, CA_category, GB_category;
- 
-function draw(error, USvideos, CAvideos, GBvideos, 
+ var dataRead = false;
+
+function readData(error, 
 	US_category_id, CA_category_id, GB_category_id){
 if(error){ console.log(error)};
 
-	USvideos = transformData(USvideos);
-	CAvideos = transformData(CAvideos);
-	GBvideos = transformData(GBvideos);
-	US_category = US_category_id;
-	CA_category = CA_category_id;
-	GB_category = GB_category_id;
+		d3.csv('static/data/youtube-new/USvideos.csv', function(data) {
+			USvideos = transformData(data);
+			dataRead = true;
+			draw(US_category_id, CA_category_id, GB_category_id);
+	});
 
-  wordcloud = new wordCloud(USvideos, US_category_id);
-	tm = new tm(USvideos,US_category_id);
+	d3.csv('static/data/youtube-new/CAvideos.csv', function(data) {
+			CAvideos = transformData(data);
+	});
+
+		d3.csv('static/data/youtube-new/GBvideos.csv', function(data) {
+			GBvideos = transformData(data);
+	});
+}
+
+function draw(US_category_id, CA_category_id, GB_category_id){
+
+		US_category = US_category_id;
+		CA_category = CA_category_id;
+		GB_category = GB_category_id;
+
+	if(dataRead == true) {
+			wordcloud = new wordCloud(USvideos, US_category_id);
+			tm = new tm(USvideos,US_category_id);
+			dataRead = false;
+	}
 
 }
 
@@ -44,10 +59,7 @@ function clickUS() {
   	if(!document.getElementById('wcSVG') != null) {
   		document.getElementById('wcSVG').remove();
   	}
- 	d3.csv("static/data/youtube-new/USvideos.csv", function(data) {
-	  	USvideos = new transformData(data);
 	  	wordcloud = new wordCloud(USvideos, US_category);
-	});
 }
 
 function clickCA() {
@@ -56,10 +68,7 @@ function clickCA() {
   	if(!document.getElementById('wcSVG') != null) {
   		document.getElementById('wcSVG').remove();
   	}
-   	d3.csv("static/data/youtube-new/CAvideos.csv", function(data) {
-	  	CAvideos = new transformData(data);
 	  	wordcloud = new wordCloud(CAvideos, CA_category);
-  });
 }
 function clickGB() {
 
@@ -67,10 +76,8 @@ function clickGB() {
   	if(!document.getElementById('wcSVG') != null) {
   		document.getElementById('wcSVG').remove();
   	}
-	d3.csv("static/data/youtube-new/GBvideos.csv", function(data) {
-		GBvideos = new transformData(data);
 		wordcloud = new wordCloud(GBvideos, GB_category);
-	});
+
 }
 
 function clickTime1() {

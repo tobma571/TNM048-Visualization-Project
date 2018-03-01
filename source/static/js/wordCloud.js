@@ -51,7 +51,6 @@ for (var i = 0; i < nrOfWords; i++) {
 
             totWordRow += getTextWidth(tagKeys[i], wordSizes[i] , 'Impact') + getTextWidth(tagKeys[i+1], wordSizes[i+1] , 'Impact');
             
-
     }
     else {
         totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
