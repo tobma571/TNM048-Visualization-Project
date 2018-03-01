@@ -23,18 +23,22 @@ function wordCloud(data,
     let nrOfWords = 120;
     let MaxSize = 100;
 
-    // Set sizes for all words
-    for (var j = 0; j < nrOfWords; j++) {
+    var margin = {top: 0, right: 3, bottom: 0, left: 0},
+        parentwidth = parentWidth - margin.left - margin.right,
+        parentheight = parentHeight - margin.top - margin.bottom;
+
+// Set sizes for all words
+for (var j = 0; j < nrOfWords; j++) {
 
         Warray[j] = tagKeys[j];
         wordSizes[j] = tagMap[tagKeys[j]]/tagMap[tagKeys[0]]*MaxSize;
 
     }
 
-    // Set arrays for translating words
-    for (var i = 0; i < nrOfWords; i++) {
+// Set arrays for translating words
+for (var i = 0; i < nrOfWords; i++) {
 
-        if(totWordRow < parentWidth) {
+    if(totWordRow < parentWidth+200) {
 
             if(i > 0){
                 wordTranslations[i] = wordTranslations[i-1] + getTextWidth(tagKeys[i-1], wordSizes[i-1] , 'Impact');   
@@ -47,16 +51,23 @@ function wordCloud(data,
 
             totWordRow += getTextWidth(tagKeys[i], wordSizes[i] , 'Impact') + getTextWidth(tagKeys[i+1], wordSizes[i+1] , 'Impact');
             
-        }
-        else {
-
-            totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
-            wordTranslations[i] = 0;
-            totTextHeight = wordTranslationsY[i-1];
-            wordTranslationsY[i] = wordSizes[i] + totTextHeight;
-        }
 
     }
+    else {
+        totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
+        wordTranslations[i] = 0;
+        totTextHeight = wordTranslationsY[i-1];
+        wordTranslationsY[i] = wordSizes[i] + totTextHeight;
+
+        if(wordTranslationsY[i] > 200) {
+            Warray.splice(i, Warray.length-i);
+            wordSizes.splice(i, wordSizes.length-i);
+            break;
+        }
+              
+    }
+
+}
 
     // Return width of a single word
     function getTextWidth(text, fontSize, fontFace) {
@@ -152,4 +163,5 @@ function wordCloud(data,
         return [freqMap, keys];
 
     }
+
 }
