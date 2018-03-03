@@ -95,6 +95,10 @@ function filterData(data, twoweekclick, monthclick, threemonthclick){
 }
 
 function reDraw(){
+
+  if(!document.getElementById('wcSVG') != null) {
+    document.getElementById('wcSVG').remove();
+  }
   // check which dataset is selected right now
     if(USvids){
       var USfiltered = filterData(USvideos, twoweekclick, monthclick, threemonthclick);
@@ -115,74 +119,50 @@ function reDraw(){
 
 function clickUS() {
 
-  	// if svg element is not empty, remove()
-  	if(!document.getElementById('wcSVG') != null) {
-  		document.getElementById('wcSVG').remove();
-  	}
     USvids = true;
     CAvids = false;
     GBvids = false;
     reDraw();
-	  // wordcloud = new wordCloud(USvideos, US_category);
 }
 
 function clickCA() {
 
-  	// if svg element is not empty, remove()
-  	if(!document.getElementById('wcSVG') != null) {
-  		document.getElementById('wcSVG').remove();
-  	}
     USvids = false;
     CAvids = true;
     GBvids = false;
     reDraw();
-	  // wordcloud = new wordCloud(CAvideos, CA_category);
 }
 function clickGB() {
 
-    // if svg element is not empty, remove()
-  	if(!document.getElementById('wcSVG') != null) {
-  		document.getElementById('wcSVG').remove();
-  	}
     USvids = false;
     CAvids = false;
     GBvids = true;
     reDraw();
-		// wordcloud = new wordCloud(GBvideos, GB_category);
-
 }
 
 function clickTime1() {
-    if(!document.getElementById('wcSVG') != null) {
-      document.getElementById('wcSVG').remove();
-    }
+
     twoweekclick = false;
     monthclick = false;
     threemonthclick = false;
     reDraw();
 }
 function clickTime2() {
-    if(!document.getElementById('wcSVG') != null) {
-      document.getElementById('wcSVG').remove();
-    }
+
     twoweekclick = true;
     monthclick = false;
     threemonthclick = false;
     reDraw();
 }
 function clickTime3() {
-    if(!document.getElementById('wcSVG') != null) {
-      document.getElementById('wcSVG').remove();
-    }
+
     twoweekclick = false;
     monthclick = true;
     threemonthclick = false;
     reDraw();
 }
 function clickTime4() {
-    if(!document.getElementById('wcSVG') != null) {
-      document.getElementById('wcSVG').remove();
-    }
+
     twoweekclick = false;
     monthclick = false;
     threemonthclick = true;
