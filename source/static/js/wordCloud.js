@@ -20,7 +20,7 @@ function wordCloud(data,
 
     let totTextHeight = 0;
     let totWordRow = 0;
-    let nrOfWords = 120;
+    let nrOfWords = 80;
     let MaxSize = 100;
 
     var margin = {top: 0, right: 3, bottom: 0, left: 0},
@@ -38,7 +38,7 @@ for (var j = 0; j < nrOfWords; j++) {
 // Set arrays for translating words
 for (var i = 0; i < nrOfWords; i++) {
 
-    if(totWordRow < parentWidth+200) {
+    if(totWordRow < parentWidth+140) {
 
             if(i > 0){
                 wordTranslations[i] = wordTranslations[i-1] + getTextWidth(tagKeys[i-1], wordSizes[i-1] , 'Impact');   
@@ -58,7 +58,7 @@ for (var i = 0; i < nrOfWords; i++) {
         totTextHeight = wordTranslationsY[i-1];
         wordTranslationsY[i] = wordSizes[i] + totTextHeight;
 
-        if(wordTranslationsY[i] > 200) {
+        if(wordTranslationsY[i] > 300) {
             Warray.splice(i, Warray.length-i);
             wordSizes.splice(i, wordSizes.length-i);
             break;
@@ -98,7 +98,7 @@ for (var i = 0; i < nrOfWords; i++) {
         .attr("height", layout.size()[1])
         .attr("id", "wcSVG")
         .append("g")
-        .attr("transform", "translate(" + 0 + "," + MaxSize/1.2 + ")") //
+        .attr("transform", "translate(" + 80 + "," + MaxSize/0.6 + ")") // prev: 1.2
         .selectAll("text")
         .data(words)
         .enter().append("text")
@@ -107,7 +107,7 @@ for (var i = 0; i < nrOfWords; i++) {
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "start")
         .attr("transform", function(d,i) {
-        return "translate(" + wordTranslations[i] + "," + wordTranslationsY[i] + ")";
+        return "translate(" +  wordTranslations[i] + "," + wordTranslationsY[i] + ")";
         })
         .text(function(d) { return d.text; });
     }
