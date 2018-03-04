@@ -46,17 +46,19 @@ function tm(data,data_category)
 
     treeMap(root);
 
+    console.log(root.children[0].children[0]);
+
     var node = root;
 
-        var cell = svg.selectAll("g")
-            .data(root.children)
+        var parent = svg.selectAll("g")
+            .data(root.leaves())
             .enter().append("svg:g")
+            .attr("class", "parent")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
-            .attr("class", "cell")
             .on("click",function (d) { return zoom(node == d.parent ? d : d.parent);});
 
-        cell.append("rect")
-            .attr("id", function(d,i) { return d.data.id; })
+        parent.append("rect")
+            .attr("id",function(d,i) { return d.data.id; })
             .attr("width", function(d) { return d.x1 - d.x0; })
             .attr("height", function(d) { return d.y1 - d.y0; })
             .attr("fill", function(d,i) { return color(d.data.id); })
@@ -67,8 +69,30 @@ function tm(data,data_category)
                 d3.select(this).style('stroke', 'none');
             });
 
+        parent.append("title")
+            .text(function(d) { return d.data.name; });
 
-        cell.append("clipPath")
+        var cell = parent//.selectAll("g.parent")
+        //.data(root.leaves()).enter()
+            .append("cell")
+            .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
+            .attr("class", "cell");
+            //.on("click",function (d) { return zoom(node == d.parent ? d : d.parent);});
+
+        cell.append("rect")
+            .attr("id", function(d,i) { return d.parent.data.id; })
+            .attr("width", function(d) { return d.parent.x1 - d.parent.x0; })
+            .attr("height", function(d) { return d.parent.y1 - d.parent.y0; })
+            .attr("fill", function(d,i) { return color(d.parent.data.id); });
+           /* .on("mouseover", function(d) {
+                d3.select(this).style('stroke', 'black');
+            })
+            .on("mouseout", function (d) {
+                d3.select(this).style('stroke', 'none');
+            });*/
+            //parent.append("cell");
+
+   /*     cell.append("clipPath")
                 .attr("id", function(d) { return "clip-" + d.data.id; })
                 .append("use")
                 .attr("xlink:href", function(d) { return "#" + d.data.id; });
@@ -83,7 +107,7 @@ function tm(data,data_category)
             .text(function(d) { return d; });
 
         cell.append("title")
-            .text(function(d) { return d.data.name; });
+            .text(function(d) { return d.data.name; });*/
 
 
 
@@ -123,9 +147,14 @@ function tm(data,data_category)
         x.domain([value.x0, value.x1]);
         y.domain([value.y0, value.y1]);
 
-        var t = svg.selectAll("g.cell").transition()
+        var rectid = value.data.id;
+        console.log(value);
+
+
+        var t = svg.selectAll("g.parent").transition()
             .duration(d3.event.altKey ? 7500 : 750)
             .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.y0) + ")"; });
+
 
         t.select("rect")
             .attr("width", function(d) { return kx * (d.x1 - d.x0) - 1; })
@@ -133,14 +162,17 @@ function tm(data,data_category)
 
         t.select("text")
             .attr("x", function(d) { return kx * (d.x1 - d.x0) / 2; })
-            .attr("y", function(d) { return ky * (d.y1 - d.y0) / 2; })
+            .attr("y", function(d) { return ky * (d.y1 - d.y0) / 2; });
             //.style("opacity", function(d) { return kx * (d.x1 - d.x0) > d.width ? 1 : 0; });
 
 
-        /*d3.select("svg").append("svg:image")
-            .attr("xlink:href", "https://i.ytimg.com/vi/gHZ1Qz0KiKM/default.jpg")
-            .attr("width", 200)
-            .attr("height",150);*/
+            //Kod för att visa bild
+            d3.selectAll("g.parent")
+                .append("svg:image")
+                .attr("xlink:href", "https://i.ytimg.com/vi/gHZ1Qz0KiKM/default.jpg")
+                .attr("width", function(d){ return kx * (d.x1 - d.x0) -1 ;})
+                .attr("height",function(d){ return ky * (d.y1 - d.y0) -1 ;});
+
 
         node = value;
 
