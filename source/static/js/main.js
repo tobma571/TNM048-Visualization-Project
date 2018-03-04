@@ -4,97 +4,148 @@ queue()
   .defer(d3.json,'static/data/youtube-new/GB_category_id.json')
   .await(readData);
 
-// var wordcloud;
-// var tm;
-// var time, country;
- var USvideos, CAvideos, GBvideos;
- var US_category, CA_category, GB_category;
- var dataRead = false;
+var USvideos, CAvideos, GBvideos;
+var US_category, CA_category, GB_category;
+// booleans to determine how to filter data
+var dataRead = false;
+var janClick = false;
+var decClick = false;
+var USvids = false;
+var CAvids = false;
+var GBvids = false;
 
 function readData(error, 
 	US_category_id, CA_category_id, GB_category_id){
 if(error){ console.log(error)};
 
-		d3.csv('static/data/youtube-new/USvideos.csv', function(data) {
-			USvideos = transformData(data);
-			dataRead = true;
-			draw(US_category_id, CA_category_id, GB_category_id);
+	d3.csv('static/data/youtube-new/USvideos.csv', function(data) {
+		USvideos = transformData(data);
+		dataRead = true;
+    USvids = true;
+		draw(US_category_id, CA_category_id, GB_category_id);
 	});
 
 	d3.csv('static/data/youtube-new/CAvideos.csv', function(data) {
 			CAvideos = transformData(data);
 	});
 
-		d3.csv('static/data/youtube-new/GBvideos.csv', function(data) {
-			GBvideos = transformData(data);
+	d3.csv('static/data/youtube-new/GBvideos.csv', function(data) {
+		GBvideos = transformData(data);
 	});
 }
 
 function draw(US_category_id, CA_category_id, GB_category_id){
 
-		US_category = US_category_id;
-		CA_category = CA_category_id;
-		GB_category = GB_category_id;
+	US_category = US_category_id;
+	CA_category = CA_category_id;
+	GB_category = GB_category_id;
 
 	if(dataRead == true) {
-			wordcloud = new wordCloud(USvideos, US_category_id);
-			tm = new tm(USvideos,US_category_id);
-			dataRead = false;
+    var USfiltered = filterData(USvideos, janClick, decClick);
+		wordcloud = new wordCloud(USfiltered, US_category_id);
+		tm = new tm(USvideos,US_category_id);
+		dataRead = false;
 	}
-
 }
 
 // add a measure of popularity in data
 function transformData(data){
 	data.forEach(function(d){
 		d.rating = Math.log2(d.views) + Math.log(d.likes/d.dislikes)
-				+ Math.log(d.comment_count); 
+			+ Math.log(d.comment_count); 
 	})
 	return data;
+}
+// filter data by month
+function filterData(data, janClick, decClick){
+  // time formatting 
+  var filterData = [];
+  var format = d3.timeParse("%Y.%d.%m"); // year-day-month date formatting
+  var cutoffDate = new Date(format(data[data.length-1].trending_date)); // most recent date, 28 feb
+  var february = new Date(cutoffDate.setDate(cutoffDate.getDate() - 28)); // 31 jan
+  var january = new Date(cutoffDate.setDate(cutoffDate.getDate() - 31)); // 31 dec
+  var december = new Date(cutoffDate.setDate(cutoffDate.getDate() - 31)); // 30 nov
+
+  if(janClick){
+    filterData = data.filter(function(d) { // filter data with date constraints
+      return format(d.trending_date) > january && format(d.trending_date) < february;
+    });
+  }
+  else if(decClick){
+    filterData = data.filter(function(d) { // filter data with date constraints
+      return format(d.trending_date) > december && format(d.trending_date) < january;
+    });
+  }
+  else{ // default is data from february 
+    filterData = data.filter(function(d) { // filter data with date constraints
+      return format(d.trending_date) > february;
+    });
+  }
+  return filterData;
+}
+
+function reDraw(){
+
+  if(!document.getElementById('wcSVG') != null) {
+    document.getElementById('wcSVG').remove();
+  }
+  // check which dataset is selected right now
+  if(USvids){
+    var USfiltered = filterData(USvideos, janClick, decClick);
+    wordcloud = new wordCloud(USfiltered, US_category);
+   // tm = new tm(USvideos,US_category_id);
+  }
+  if(CAvids){
+    var CAfiltered = filterData(CAvideos, janClick, decClick);
+    wordcloud = new wordCloud(CAfiltered, CA_category);
+    // tm = new tm(CAvideos,CA_category_id);
+  }
+  if(GBvids){
+    var GBfiltered = filterData(GBvideos, janClick, decClick);
+    wordcloud = new wordCloud(GBfiltered, GB_category);
+    // tm = new tm(GBvideos,GB_category_id);
+    }
 }
 
 function clickUS() {
 
-  	// if svg element is not empty, remove()
-  	if(!document.getElementById('wcSVG') != null) {
-  		document.getElementById('wcSVG').remove();
-  	}
-	  	wordcloud = new wordCloud(USvideos, US_category);
+  USvids = true;
+  CAvids = false;
+  GBvids = false;
+  reDraw();
 }
 
 function clickCA() {
 
-  	// if svg element is not empty, remove()
-  	if(!document.getElementById('wcSVG') != null) {
-  		document.getElementById('wcSVG').remove();
-  	}
-	  	wordcloud = new wordCloud(CAvideos, CA_category);
+  USvids = false;
+  CAvids = true;
+  GBvids = false;
+  reDraw();
 }
 function clickGB() {
 
-    // if svg element is not empty, remove()
-  	if(!document.getElementById('wcSVG') != null) {
-  		document.getElementById('wcSVG').remove();
-  	}
-		wordcloud = new wordCloud(GBvideos, GB_category);
-
+  USvids = false;
+  CAvids = false;
+  GBvids = true;
+  reDraw();
 }
 
 function clickTime1() {
-  time = document.getElementById('1week').getAttribute('value');
-  console.log(time);
+
+  janClick = false;
+  decClick = false;
+  reDraw();
 }
 function clickTime2() {
-  time = document.getElementById('2week').getAttribute('value');
-  console.log(time);
+
+  janClick = true;
+  decClick = false;
+  reDraw();
 }
 function clickTime3() {
-  time = document.getElementById('1month').getAttribute('value');
-  console.log(time);
-}
-function clickTime4() {
-  time = document.getElementById('3month').getAttribute('value');
-  console.log(time);
-}
 
+  janClick = false;
+  decClick = true;
+  reDraw();
+}
 

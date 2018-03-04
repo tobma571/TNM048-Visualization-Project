@@ -37,10 +37,9 @@ function showDiv() {
 <!--               <button onclick="myFunction2()" class="dropbtn">Filter by country</button> -->
               <button class="dropbtn">Filter by time</button>
               <div id="timeDropdown" class="dropdown-content">
-                <a id="1week" value="1week" onclick="return clickTime1()">1 week</a>
-                <a id="2week" value="2week" onclick="return clickTime2()">2 weeks</a>
-                <a id="1month" value="1month" onclick="return clickTime3()">1 month</a>
-                <a id="3month" value="3month" onclick="return clickTime4()">3 months</a>
+                <a id="1week" value="1week" onclick="return clickTime1()">February -18</a>
+                <a id="2week" value="2week" onclick="return clickTime2()">January -18</a>
+                <a id="1month" value="1month" onclick="return clickTime3()">December -17</a>
               </div>
             </div>
 
@@ -163,10 +162,12 @@ $(document).ready(function(){
           <!-- Treemap plot -->
           <div id="treemap"></div>
 
+
+<div class="wcdiv">
           <!-- Word-Cloud plot -->
           <div id="word-cloud"></div>
-        </div>
-
+</div>
+</div>
    <!-- Lib 
 
   <script src="./static/lib/jquery.min.js"></script>

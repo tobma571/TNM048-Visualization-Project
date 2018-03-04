@@ -1,7 +1,8 @@
 
-
 function wordCloud(data, 
-	US_category_id) {
+	category_id) {
+
+    console.log("drawing cloud");
 
     var div = '#word-cloud';
 
@@ -20,53 +21,50 @@ function wordCloud(data,
 
     let totTextHeight = 0;
     let totWordRow = 0;
-    let nrOfWords = 120;
+    let nrOfWords = 90;
     let MaxSize = 100;
 
     var margin = {top: 0, right: 3, bottom: 0, left: 0},
         parentwidth = parentWidth - margin.left - margin.right,
         parentheight = parentHeight - margin.top - margin.bottom;
 
-// Set sizes for all words
-for (var j = 0; j < nrOfWords; j++) {
+    // Set sizes for all words
+    for (var j = 0; j < nrOfWords; j++) {
 
-        Warray[j] = tagKeys[j];
-        wordSizes[j] = tagMap[tagKeys[j]]/tagMap[tagKeys[0]]*MaxSize;
-
-    }
-
-// Set arrays for translating words
-for (var i = 0; i < nrOfWords; i++) {
-
-    if(totWordRow < parentWidth+200) {
-
-            if(i > 0){
-                wordTranslations[i] = wordTranslations[i-1] + getTextWidth(tagKeys[i-1], wordSizes[i-1] , 'Impact');   
-                wordTranslationsY[i] = wordTranslationsY[i-1];
-            }    
-            else{
-                wordTranslations[i] = 0;
-                wordTranslationsY[i] = 0;  
-            }
-
-            totWordRow += getTextWidth(tagKeys[i], wordSizes[i] , 'Impact') + getTextWidth(tagKeys[i+1], wordSizes[i+1] , 'Impact');
-            
-    }
-    else {
-        totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
-        wordTranslations[i] = 0;
-        totTextHeight = wordTranslationsY[i-1];
-        wordTranslationsY[i] = wordSizes[i] + totTextHeight;
-
-        if(wordTranslationsY[i] > 200) {
-            Warray.splice(i, Warray.length-i);
-            wordSizes.splice(i, wordSizes.length-i);
-            break;
+            Warray[j] = tagKeys[j];
+            wordSizes[j] = tagMap[tagKeys[j]]/tagMap[tagKeys[0]]*MaxSize;
         }
-              
-    }
 
-}
+
+    // Set arrays for translating words
+    for (var i = 0; i < nrOfWords; i++) {
+
+        if(totWordRow < parentWidth+140) {
+
+
+                if(i > 0){
+                    wordTranslations[i] = wordTranslations[i-1] + getTextWidth(tagKeys[i-1], wordSizes[i-1] , 'Impact');   
+                    wordTranslationsY[i] = wordTranslationsY[i-1];
+                }    
+                else{
+                    wordTranslations[i] = 0;
+                    wordTranslationsY[i] = 0;  
+                }
+                totWordRow += getTextWidth(tagKeys[i], wordSizes[i] , 'Impact') + getTextWidth(tagKeys[i+1], wordSizes[i+1] , 'Impact');          
+        }
+        else {
+            totWordRow = getTextWidth(tagKeys[i], wordSizes[i] , 'Impact');
+            wordTranslations[i] = 0;
+            totTextHeight = wordTranslationsY[i-1];
+            wordTranslationsY[i] = wordSizes[i] + totTextHeight;
+
+            if(wordTranslationsY[i] > 300) {
+                Warray.splice(i, Warray.length-i);
+                wordSizes.splice(i, wordSizes.length-i);
+                break;
+            }         
+        }
+    }
 
     // Return width of a single word
     function getTextWidth(text, fontSize, fontFace) {
@@ -98,7 +96,7 @@ for (var i = 0; i < nrOfWords; i++) {
         .attr("height", layout.size()[1])
         .attr("id", "wcSVG")
         .append("g")
-        .attr("transform", "translate(" + 0 + "," + MaxSize/1.2 + ")") //
+        .attr("transform", "translate(" + 80 + "," + MaxSize/0.6 + ")") // prev: 1.2
         .selectAll("text")
         .data(words)
         .enter().append("text")
@@ -107,7 +105,8 @@ for (var i = 0; i < nrOfWords; i++) {
         .style("fill", function(d, i) { return fill(i); })
         .attr("text-anchor", "start")
         .attr("transform", function(d,i) {
-        return "translate(" + wordTranslations[i] + "," + wordTranslationsY[i] + ")";
+        return "translate(" +  wordTranslations[i] + "," + wordTranslationsY[i] + ")";
+
         })
         .text(function(d) { return d.text; });
     }
@@ -117,21 +116,6 @@ for (var i = 0; i < nrOfWords; i++) {
         
         tagArray = [];
        // noSamples = 1000;
-
-        var format = d3.timeParse("%Y.%d.%m"); // year-day-month date formatting
-        var cutoffDate = new Date(format(tagData[tagData.length-1].trending_date)); // most recent date 
-
-        var threeMonths = new Date(cutoffDate.setDate(cutoffDate.getDate() - 90));
-        cutoffDate = new Date(format(tagData[tagData.length-1].trending_date));
-        var oneMonth = new Date(cutoffDate.setDate(cutoffDate.getDate() - 30));
-        cutoffDate = new Date(format(tagData[tagData.length-1].trending_date));
-        var twoWeeks = new Date(cutoffDate.setDate(cutoffDate.getDate() - 14));
-        cutoffDate = new Date(format(tagData[tagData.length-1].trending_date));
-        var oneWeek = new Date(cutoffDate.setDate(cutoffDate.getDate() - 7));
-
-        tagData = tagData.filter(function(d) { // filter data with date constraints
-          return format(d.trending_date) > oneWeek;
-        });
 
         // Concatinates the tags of chosen number of samples into a single string.
         for(let j = 0; j < tagData.length; j++) {
@@ -152,7 +136,6 @@ for (var i = 0; i < nrOfWords; i++) {
                 }
                 else {
                     freqMap[word]++;
-
                 }         
         }
         keys.sort(function(a, b) {
@@ -160,7 +143,7 @@ for (var i = 0; i < nrOfWords; i++) {
         });
 
         return [freqMap, keys];
-
     }
-
 }
+
+

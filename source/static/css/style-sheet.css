@@ -1,8 +1,12 @@
 
 body {
-height: 100%;
+height: 90%;
 padding: 0;
 margin: 0;
+background-image: url("bg1.png");
+background-repeat: no-repeat, repeat;
+background-size:cover;
+background-color: #cccccc;
 }
 
 html {
@@ -26,20 +30,24 @@ margin: 0;
 }
 
 .modal-body {
-    color: black;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .modal-header {
     color: black;
-    background-color: grey;
+    background-color: rgba(0, 0, 0, 0);
     font-size: 60px;    
 }
 
 .dropdown-submenu {
     position: relative;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .dropdown-submenu .dropdown-menu {
+    background-image: url("bg1.png");
+    background-repeat: no-repeat, repeat;
+    background-size:cover;
     top: 0;
     left: 100%;
     margin-top: -1px;
@@ -61,7 +69,7 @@ margin: 0;
 
 #treeText {
     font-size: 25px; 
-    color:black;
+    color:white;
     position: relative; top: 5px; left: 365px;
     }
 
@@ -76,7 +84,7 @@ margin: 0;
 
 #tagText {
     font-size: 25px; 
-    color:black;
+    color:white;
     position: relative; top: 5px; left: 1075px;
     }
 
@@ -87,7 +95,8 @@ margin: 0;
 
 #treemap {
 
-    border: 3px solid green;
+ /*   border: 3px solid green; */
+
     width: 50%;
     height: 90%;
     float: left;
@@ -96,11 +105,26 @@ margin: 0;
     z-index: 1;
 }
 
-#word-cloud {
-    border: 3px solid green;
+.wcdiv {
     width: 50%;
     height: 90%;
-    float: right;
+    background-image: url("tv11.png");
+  /*  background-repeat: no-repeat, repeat; */
+    background-size:cover;
+    object-fit: contain;
+ /* background-color: rgba(255, 255, 255, 1); */
+    float: left; 
+
+}
+
+#word-cloud {
+   /* border: 3px solid green; */
+   /*   background-color: rgba(255, 255, 255, 0.8);  */
+   /* width: 45%; */
+
+    width: 100%;
+    height: 100%;
+    float: right; 
     bottom: 0;
     right: 0;
     z-index: 1;
@@ -109,9 +133,10 @@ margin: 0;
 	Styling of dropdown
 */
 .navbar, .dropbtn {
-    background-color: #4CAF50;
+ /*   background-color: #4CAF50;*/
     color: white;
-    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 16px; 
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -125,15 +150,16 @@ margin: 0;
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.2);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
     z-index: 1;
 }
 
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.2);
+  /*  padding: 12px 16px; */
     text-decoration: none;
     display: block;
 }
@@ -145,7 +171,8 @@ margin: 0;
 }
 
 .dropdown:hover, .dropbtn {
-    background-color: #3e8e41;
+    background-color: rgba(0, 0, 0, 0.2);
+   /* opacity: .4; */
 }
 
  /* 
