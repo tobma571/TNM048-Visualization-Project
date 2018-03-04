@@ -25,7 +25,7 @@ margin: 0;
     font-family: Futura, Trebuchet MS, Arial, sans-serif;
   /*  font-family: "Times New Roman", Times, serif; */
     margin: auto;
-    position: relative; top: 5px; left: 385px;
+    position: relative; top: 5px; left: 485px;
     display: inline-block;
 }
 
@@ -174,6 +174,43 @@ margin: 0;
     background-color: rgba(0, 0, 0, 0.2);
    /* opacity: .4; */
 }
+
+.thl {
+    position:absolute;
+    left: 140px;
+    font-size: 14px;
+    top: 10px;
+}
+
+.TimeHeadline {
+    display: inline-block;
+    color: black;
+}
+
+.chl {
+    position:absolute;
+    font-size: 14px;
+    left: 20px;
+    top: 10px;
+}
+
+.CountryHeadline {
+    display: inline-block;
+    color: black;
+
+}
+
+.filterSelect {
+    position: relative;
+
+    color: black;
+
+}
+.filterSelect2 {
+    position: relative;
+    color: black;
+}
+
 
  /* 
 	Styling of Navigation Bar

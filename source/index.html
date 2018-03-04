@@ -12,6 +12,14 @@
 
 <link rel="stylesheet" href="./static/css/style-sheet.css"> 
 
+<script type="text/javascript">
+function changeFilter() { 
+  var eID = document.getElementById("dropChange"); 
+  var dayVal = eID.options[eID.selectedIndex].value; 
+  var daytxt = eID.options[eID.selectedIndex].text; 
+  alert("Selected Item " + daytxt + ", Value " + dayVal); }
+</script>
+
 </head>
 <body>
 
@@ -21,60 +29,53 @@ function showDiv() {
 }
 </script>
 
-        <div class="base">
+<div class="base">
           <!-- Navigation bar with dropdown menus-->
-          <div class="navbar">
-            <div class="dropdown">
-<!--               <button onclick="myFunction2()" class="dropbtn">Filter by country</button> -->
-              <button class="dropbtn">Filter by country</button>
-              <div id="countryDropdown" class="dropdown-content">
-                <a id="US" value="USvideos" onclick="return clickUS()">USA</a>
-                <a id="CA" value="CAvideos" onclick="return clickCA()">Canada</a>
-                <a id="GB" value="GBvideos" onclick="return clickGB()">Great Britain</a>
-              </div>
+    <div class="navbar">
+
+<div class="chl">
+    <p id="CountryHeadline">Filter by Country</p>
+ </div>
+<div class="thl">
+    <p id="TimeHeadline">Filter by time</p>
+ </div>
+        <div class="dropdown">
+
+        <div class="filterSelect">     
+        <select id="dropChange">
+          <option value="USvideos" onclick="return clickUS()">USA</option>
+          <option value="CAvideos" onclick="return clickCA()">Canada</option>
+          <option value="GBvideos" onclick="return clickGB()">Great Britain</option>
+        </select>
+        </div>
+
+      <div id="message"></div>
+
             </div>
+
+            
+
             <div class="dropdown">
 <!--               <button onclick="myFunction2()" class="dropbtn">Filter by country</button> -->
-              <button class="dropbtn">Filter by time</button>
+
+  <!--               <button class="dropbtn">Filter by time</button>
               <div id="timeDropdown" class="dropdown-content">
                 <a id="1week" value="1week" onclick="return clickTime1()">1 week</a>
                 <a id="2week" value="2week" onclick="return clickTime2()">2 weeks</a>
                 <a id="1month" value="1month" onclick="return clickTime3()">1 month</a>
                 <a id="3month" value="3month" onclick="return clickTime4()">3 months</a>
-              </div>
-            </div>
+              </div>  -->
 
-<!-- Filter button dropdown -->
-            
-      <div class="FilterMultiDrop">                                       
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Filter
-          <span class="caret"></span></button>
-
-          <ul class="dropdown-menu">
-            <li class="dropdown-submenu">
-              <a class="test" tabindex="-1" href="#">Filter by country <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                    <div id="countryDropdown">
-                      <li><a id="US" value="USvideos" onclick="return clickUS()">USA</a></li>
-                      <li><a id="CA" value="CAvideos" onclick="return clickCA()">Canada</a></li>
-                      <li><a id="GB" value="GBvideos" onclick="return clickGB()">Great Britain</a></li>
-                    </div>
-              </ul>
-              <a class="test" tabindex="-1" href="#">Filter by time <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                      <div id="timeDropdown">
-                      <!-- <li><a id="1week" value="1week" onclick="clickTime1(); clickTime2();">1 week</a></li> -->  <!-- Note: to test double event -->
-                      <li><a id="1week" value="2week" onclick="return clickTime1()">1 week</a></li>
-                      <li><a id="2week" value="2week" onclick="return clickTime2()">2 weeks</a></li>
-                      <li><a id="1month" value="1month" onclick="return clickTime3()">1 month</a></li>
-                      <li><a id="3month" value="3month" onclick="return clickTime4()">3 months</a></li>
-                    </div>
-              </ul>
-            </li>
-          </ul>
+        <div class="filterSelect2">     
+        <select id="dropChange">
+          <option value="1week" onclick="return clickTime1()">1 week</option>
+          <option value="2week" onclick="return clickTime2()">2 weeks</option>
+          <option value="1month" onclick="return clickTime3()">1 month</option>
+          <option value="3month" onclick="return clickTime4()">3 months</option>
+        </select>
         </div>
-      </div>  
+
+            </div>
 
         <h1 class="Headline">Youtube Trends</h1>
         </div> <!-- End navbar -->
