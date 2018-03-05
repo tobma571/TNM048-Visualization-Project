@@ -68,7 +68,7 @@ function tm(data,data_category)
             .attr("id",function(d,i) { return d.data.id; })
             .attr("width", function(d) { return d.x1 - d.x0; })
             .attr("height", function(d) { return d.y1 - d.y0; })
-            .attr("fill", function(d,i) { return color(d.data.id); });
+            .attr("fill", function(d,i) { return color(d.parent.data.id); });
 /*            .on("mouseover", function(d) {
                 d3.select(this).style('stroke', 'black');
             })
@@ -104,6 +104,22 @@ function tm(data,data_category)
             d3.select(this).style('stroke', 'none');
         });
 
+    grandparent.append("title")
+        .text(function(d) { return d.data.name; });
+
+    grandparent.append("clipPath")
+        .attr("id", function(d) { return "clip-" + d.data.id; })
+        .append("use")
+        .attr("xlink:href", function(d) { return "#" + d.data.id; });
+
+    grandparent.append("text")
+        .attr("clip-path", function(d) { return "url(#clip-" + d.data.id + ")"; })
+        .selectAll("tspan")
+        .data(function(d) { return d.data.name.split(/(?=[A-Z][^A-Z])/g); })
+        .enter().append("tspan")
+        .attr("x", 4)
+        .attr("y", function(d, i) { return 13 + i * 10; })
+        .text(function(d) { return d; });
 
       /* var cell = svg.selectAll("g.parent")
         .data(root.children).enter()
@@ -199,15 +215,26 @@ function tm(data,data_category)
 
         t.select("image")
             .attr("width", function(d) { return kx * (d.x1 - d.x0) - 1; })
-            .attr("height", function(d) { return ky * (d.y1 - d.y0) - 1; })
+            .attr("height", function(d) { return ky * (d.y1 - d.y0) - 1; });
             //.attr("opacity",1);
             //.style("opacity", function(d) { return kx * (d.x1 - d.x0) > d.width ? 1 : 0; });
 
         t.select("title")
             .text(function(d) { return d.data.title; });
 
-        var t1 = svg.selectAll("g.grandparent").select("rect")
-            .attr("opacity",value.depth == 0 ? 1: 0);
+
+
+
+        var t2 = svg.selectAll("g.grandparent").transition()
+            .duration(d3.event.altKey ? 7500 : 750)
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.y0) + ")"; });
+
+            t2.select("rect")
+                .attr("width", function(d) { return kx * (d.x1 - d.x0) - 1; })
+                .attr("height", function(d) { return ky * (d.y1 - d.y0) - 1; })
+                .attr("opacity",value.depth == 0 ? 1: 0);
+
+
 
 
             //Kod för att visa bild
