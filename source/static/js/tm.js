@@ -20,7 +20,8 @@ function tm(data,data_category)
 
     var svg = d3.select(div).append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .attr("id", "tmSVG");
 
     var tooltip = d3.select(div).append("div")
         .attr("class", "tooltip")
@@ -46,7 +47,7 @@ function tm(data,data_category)
 
     treeMap(root);
 
-    console.log(root.leaves());
+    // console.log(root.leaves());
 
     var node = root;
 

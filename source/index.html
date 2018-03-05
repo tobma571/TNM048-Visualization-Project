@@ -30,147 +30,130 @@ function showDiv() {
 </script>
 
 <div class="base">
-          <!-- Navigation bar with dropdown menus-->
-    <div class="navbar">
+  <!-- Navigation bar with dropdown menus-->
+  <div class="navbar">
 
-<div class="chl">
-    <p id="CountryHeadline">Filter by Country</p>
- </div>
-<div class="thl">
-    <p id="TimeHeadline">Filter by time</p>
- </div>
-        <div class="dropdown">
+    <div class="chl">
+        <p id="CountryHeadline">Filter by Country</p>
+    </div>
 
-        <div class="filterSelect">     
+    <div class="thl">
+        <p id="TimeHeadline">Filter by time</p>
+    </div>
+
+    <div class="dropdown">
+      <div class="filterSelect">     
         <select id="dropChange">
           <option value="USvideos" onclick="return clickUS()">USA</option>
           <option value="CAvideos" onclick="return clickCA()">Canada</option>
           <option value="GBvideos" onclick="return clickGB()">Great Britain</option>
         </select>
-        </div>
-
+      </div>
       <div id="message"></div>
+    </div>
 
-            </div>
-
-            
-
-            <div class="dropdown">
-<!--               <button onclick="myFunction2()" class="dropbtn">Filter by country</button> -->
-
-  <!--               <button class="dropbtn">Filter by time</button>
-              <div id="timeDropdown" class="dropdown-content">
-<<<<<<< HEAD
-                <a id="1week" value="1week" onclick="return clickTime1()">1 week</a>
-                <a id="2week" value="2week" onclick="return clickTime2()">2 weeks</a>
-                <a id="1month" value="1month" onclick="return clickTime3()">1 month</a>
-                <a id="3month" value="3month" onclick="return clickTime4()">3 months</a>
-              </div>  -->
-
-        <div class="filterSelect2">     
+    <div class="dropdown">
+      <div class="filterSelect2">     
         <select id="dropChange">
           <option value="1week" onclick="return clickTime1()">February -18</option>
           <option value="2week" onclick="return clickTime2()">January -18</option>
-          <option value="1month" onclick="return clickTime3()">>December -17</option>
-
+          <option value="1month" onclick="clickTime3(); hej()">December -17</option>
         </select>
+      </div>
+    </div>
+    <h1 class="Headline">Youtube Trends</h1>
+  </div> <!-- End navbar -->
 
-
-              </div>
-        </div>
-
-        <h1 class="Headline">Youtube Trends</h1>
-        </div> <!-- End navbar -->
-
-
-<script>
-$(document).ready(function(){
-  $('.dropdown-submenu a.test').on("click", function(e){
-    $(this).next('ul').toggle();
-    e.stopPropagation();
-    e.preventDefault();
+  <script>
+  $(document).ready(function(){
+    $('.dropdown-submenu a.test').on("click", function(e){
+      $(this).next('ul').toggle();
+      e.stopPropagation();
+      e.preventDefault();
+    });
   });
-});
-</script>
+
+  function hej(){
+    console.log("sug en kuk");
+  }
+  </script>
 
 
-<!-- Div for healines over treemap and wordcloud + infomodals! -->
+<!-- Div for headlines over treemap and wordcloud + infomodals! -->
 
-<div>
+  <div>
+    <div class = "treeTextDiv">
+    <p id="treeText">Treemap</p>
+    </div>
+      <!--   Information Button   -->
+        <div id="InfoModal" class="treeInfo">
+        <!-- Trigger the modal with a button -->
+        <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
 
-  <div class = "treeTextDiv">
-  <p id="treeText">Treemap</p>
-  </div>
-    <!--   Information Button   -->
-      <div id="InfoModal" class="treeInfo">
-      <!-- Trigger the modal with a button -->
-      <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-      </button>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-
-        <div class="modal-dialog"> 
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Treemap description:</h4>
-            </div>
-            <div class="modal-body">
-              <p>The treemap displays the distribution of the most popular genres in youtube videos. 
-                The largest box shows thereby the most pupular genre. By clicking one of the boxes....</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div> 
+          <div class="modal-dialog"> 
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Treemap description:</h4>
+              </div>
+              <div class="modal-body">
+                <p>The treemap displays the distribution of the most popular genres in youtube videos. 
+                  The largest box shows thereby the most pupular genre. By clicking one of the boxes....</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div> 
+          </div>
         </div>
       </div>
+
+    <div class = "tagTextDiv">
+    <p id="tagText">WordCloud</p>
     </div>
+      <!--   Information Button   -->
+        <div id="InfoModal" class="tagInfo">
+        <!-- Trigger the modal with a button -->
+        <button class="btn btn-default" data-toggle="modal" data-target="#myModal2">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal2" role="dialog">
 
-  <div class = "tagTextDiv">
-  <p id="tagText">WordCloud</p>
-  </div>
-    <!--   Information Button   -->
-      <div id="InfoModal" class="tagInfo">
-      <!-- Trigger the modal with a button -->
-      <button class="btn btn-default" data-toggle="modal" data-target="#myModal2">
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-      </button>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal2" role="dialog">
-
-        <div class="modal-dialog"> 
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">WordCloud description:</h4>
-            </div>
-            <div class="modal-body-word">
-              <p>The wordcloud displays the most popular tags in the trending videos on youtube. 
-                You can filter the results by country and time,
-                 and also by category, which is done by picking one in the Treemap to the left.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div> 
+          <div class="modal-dialog"> 
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">WordCloud description:</h4>
+              </div>
+              <div class="modal-body-word">
+                <p>The wordcloud displays the most popular tags in the trending videos on youtube. 
+                  You can filter the results by country and time,
+                   and also by category, which is done by picking one in the Treemap to the left.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div> 
+          </div>
         </div>
       </div>
-    </div>
+  </div>
 
-</div>
-
-          <!-- Treemap plot -->
-          <div id="treemap"></div>
+  <!-- Treemap plot -->
+  <div id="treemap"></div>
 
 
-<div class="wcdiv">
-          <!-- Word-Cloud plot -->
-          <div id="word-cloud"></div>
-</div>
+  <div class="wcdiv">
+    <!-- Word-Cloud plot -->
+    <div id="word-cloud"></div>
+  </div>
 </div>
    <!-- Lib 
 

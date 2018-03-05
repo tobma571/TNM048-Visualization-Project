@@ -6,6 +6,7 @@ queue()
 
 var USvideos, CAvideos, GBvideos;
 var US_category, CA_category, GB_category;
+var wordcloud, treeMap;
 // booleans to determine how to filter data
 var dataRead = false;
 var janClick = false;
@@ -43,7 +44,7 @@ function draw(US_category_id, CA_category_id, GB_category_id){
 	if(dataRead == true) {
     var USfiltered = filterData(USvideos, janClick, decClick);
 		wordcloud = new wordCloud(USfiltered, US_category_id);
-		tm = new tm(USvideos,US_category_id);
+		treeMap = new tm(USvideos,US_category_id);
 		dataRead = false;
 	}
 }
@@ -89,26 +90,29 @@ function reDraw(){
   if(!document.getElementById('wcSVG') != null) {
     document.getElementById('wcSVG').remove();
   }
+  if(!document.getElementById('tmSVG') != null) {
+    document.getElementById('tmSVG').remove();
+  }
   // check which dataset is selected right now
   if(USvids){
     var USfiltered = filterData(USvideos, janClick, decClick);
     wordcloud = new wordCloud(USfiltered, US_category);
-   // tm = new tm(USvideos,US_category_id);
+    treeMap = new tm(USfiltered,US_category);
   }
   if(CAvids){
     var CAfiltered = filterData(CAvideos, janClick, decClick);
     wordcloud = new wordCloud(CAfiltered, CA_category);
-    // tm = new tm(CAvideos,CA_category_id);
+    treeMap = new tm(CAfiltered,CA_category);
   }
   if(GBvids){
     var GBfiltered = filterData(GBvideos, janClick, decClick);
     wordcloud = new wordCloud(GBfiltered, GB_category);
-    // tm = new tm(GBvideos,GB_category_id);
-    }
+    treeMap = new tm(GBfiltered,GB_category);
+  }
 }
 
 function clickUS() {
-
+  console.log("clickUS");
   USvids = true;
   CAvids = false;
   GBvids = false;
@@ -116,14 +120,14 @@ function clickUS() {
 }
 
 function clickCA() {
-
+  console.log("clickCA");
   USvids = false;
   CAvids = true;
   GBvids = false;
   reDraw();
 }
 function clickGB() {
-
+  console.log("clickGB");
   USvids = false;
   CAvids = false;
   GBvids = true;
@@ -131,21 +135,25 @@ function clickGB() {
 }
 
 function clickTime1() {
-
+  console.log("click1");
   janClick = false;
   decClick = false;
   reDraw();
 }
 function clickTime2() {
-
+  console.log("click2");
   janClick = true;
   decClick = false;
   reDraw();
 }
 function clickTime3() {
-
+  console.log("click3");
   janClick = false;
   decClick = true;
   reDraw();
+}
+
+function hej(){
+  console.log("sug en kuk");
 }
 
