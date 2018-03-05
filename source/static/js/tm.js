@@ -57,7 +57,8 @@ function tm(data,data_category)
             .enter().append("svg:g")
             .attr("class", "parent")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
-            .on("click",function (d) { return zoom(node == d.parent && node.height != 0 ? d : d.parent);})
+            .on("click",function (d) { 
+                return zoom(node == d.parent && node.height != 0 ? d : d.parent);})
             .on("mouseover", function(d) {
                 d3.select(this).style('stroke', 'black');
             })
@@ -199,7 +200,7 @@ function tm(data,data_category)
 
         var rectid = value.data.id;
         console.log(value);
-
+        getCategory(value.data.name);
 
         var t = svg.selectAll("g.parent").transition()
             .duration(d3.event.altKey ? 7500 : 750)

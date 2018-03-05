@@ -6,6 +6,7 @@ queue()
 
 var USvideos, CAvideos, GBvideos;
 var US_category, CA_category, GB_category;
+var cat = "categories";
 var wordcloud, treeMap;
 // booleans to determine how to filter data
 var dataRead = false;
@@ -43,7 +44,7 @@ function draw(US_category_id, CA_category_id, GB_category_id){
 
 	if(dataRead == true) {
     var USfiltered = filterData(USvideos, janClick, decClick);
-		wordcloud = new wordCloud(USfiltered, US_category_id);
+		wordcloud = new wordCloud(USfiltered, US_category_id, cat);
 		treeMap = new tm(USvideos,US_category_id);
 		dataRead = false;
 	}
@@ -111,6 +112,26 @@ function reDraw(){
   }
 }
 
+function reDrawWordCloud(category){
+
+  if(!document.getElementById('wcSVG') != null) {
+    document.getElementById('wcSVG').remove();
+  }
+  // check which dataset is selected right now
+  if(USvids){
+    var USfiltered = filterData(USvideos, janClick, decClick);
+    wordcloud = new wordCloud(USfiltered, US_category, category);
+  }
+  if(CAvids){
+    var CAfiltered = filterData(CAvideos, janClick, decClick);
+    wordcloud = new wordCloud(CAfiltered, CA_category, category);
+  }
+  if(GBvids){
+    var GBfiltered = filterData(GBvideos, janClick, decClick);
+    wordcloud = new wordCloud(GBfiltered, GB_category, category);
+  }
+}
+
 function clickUS() {
   console.log("clickUS");
   USvids = true;
@@ -153,7 +174,11 @@ function clickTime3() {
   reDraw();
 }
 
-function hej(){
-  console.log("sug en kuk");
+function getCategory(category){
+  console.log(category);
+  console.log(US_category);
+  cat = category;
+
+  reDrawWordCloud(category);
 }
 

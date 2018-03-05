@@ -1,6 +1,6 @@
 
 function wordCloud(data, 
-	category_id) {
+	category_id, category) {
 
     console.log("drawing cloud");
 
@@ -11,7 +11,7 @@ function wordCloud(data,
     var parentWidth = $(div).width();
     var parentHeight = $(div).height();
 
-    var tagFreqResult = tagFreq(data);
+    var tagFreqResult = tagFreq(data, category_id, category);
     var tagMap = tagFreqResult[0];
     var tagKeys = tagFreqResult[1];
     var Warray = [];
@@ -112,15 +112,28 @@ function wordCloud(data,
     }
 
     // Function to calculate frequency of tags
-    function tagFreq(tagData) {
+    function tagFreq(tagData, category_id, category) {
         
         tagArray = [];
        // noSamples = 1000;
+       // console.log(category_id.items[1].snippet.title);
+       var catID = category;
+
+       category_id.items.forEach(function(d){
+            if(d.snippet.title == category){
+                catID = d.id;
+            } 
+       })
+       // console.log(catID);
+       // console.log(category);
+       // console.log(tagData[0].category_id);
 
         // Concatinates the tags of chosen number of samples into a single string.
         for(let j = 0; j < tagData.length; j++) {
-            var cliptags = tagData[j].tags.split('"|"');
-            tagArray = tagArray.concat(cliptags);
+             if(category == "categories" || tagData[j].category_id == catID){
+                var cliptags = tagData[j].tags.split('"|"');
+                tagArray = tagArray.concat(cliptags);
+             }
         }
 
         var freqMap = {}; // Hashmap for tags
