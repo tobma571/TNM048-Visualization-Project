@@ -3,7 +3,7 @@ function tm(data,data_category)
 
     var div = '#treemap';
 
-    var smaller_data = data.slice(0,100);
+    var smaller_data = data.slice(0,200);
     var categories = data_category.items;
 
     var parentWidth = $(div).width();
@@ -56,7 +56,7 @@ function tm(data,data_category)
             .enter().append("svg:g")
             .attr("class", "parent")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
-            .on("click",function (d) { return zoom(node == d.parent ? d : d.parent);})
+            .on("click",function (d) { return zoom(node == d.parent && node.height != 0 ? d : d.parent);})
             .on("mouseover", function(d) {
                 d3.select(this).style('stroke', 'black');
             })
@@ -82,10 +82,27 @@ function tm(data,data_category)
             parent.append("g:image")
                 .attr("xlink:href", function(d){return d.data.thumbnail_link})
                 .attr("width", function(d){ return (d.x1 - d.x0) -1 ;})
-                .attr("height",function(d){ return (d.y1 - d.y0) -1 ;})
-                .attr("opacity",0);
+                .attr("height",function(d){ return (d.y1 - d.y0) -1 ;});
+                //.attr("opacity",0);
 
 
+    var grandparent = svg.selectAll("svg")
+        .data(root.children).enter().append("svg:g")
+        .attr("class", "grandparent")
+        .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+
+    grandparent.append("rect")
+        .attr("id",function(d,i) { return d.data.id; })
+        .attr("width", function(d) { return d.x1 - d.x0; })
+        .attr("height", function(d) { return d.y1 - d.y0; })
+        .attr("fill", function(d,i) { return color(d.data.id); })
+        .on("click",function (d) {return zoom(node == d.parent ? d : d.parent);})
+        .on("mouseover", function(d) {
+            d3.select(this).style('stroke', 'black');
+        })
+        .on("mouseout", function (d) {
+            d3.select(this).style('stroke', 'none');
+        });
 
 
       /* var cell = svg.selectAll("g.parent")
@@ -183,11 +200,14 @@ function tm(data,data_category)
         t.select("image")
             .attr("width", function(d) { return kx * (d.x1 - d.x0) - 1; })
             .attr("height", function(d) { return ky * (d.y1 - d.y0) - 1; })
-            .attr("opacity",1);
+            //.attr("opacity",1);
             //.style("opacity", function(d) { return kx * (d.x1 - d.x0) > d.width ? 1 : 0; });
 
         t.select("title")
             .text(function(d) { return d.data.title; });
+
+        var t1 = svg.selectAll("g.grandparent").select("rect")
+            .attr("opacity",value.depth == 0 ? 1: 0);
 
 
             //Kod för att visa bild
