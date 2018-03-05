@@ -3,7 +3,7 @@ function tm(data,data_category)
 
     var div = '#treemap';
 
-    var smaller_data = data.slice(0,1000);
+    var smaller_data = data.slice(0,200);
     var categories = data_category.items;
 
     var parentWidth = $(div).width();
@@ -46,22 +46,17 @@ function tm(data,data_category)
 
     treeMap(root);
 
-    console.log(root.children[0].children[0]);
+    console.log(root.leaves());
 
     var node = root;
 
-        var parent = svg.selectAll("g")
+
+    var parent = svg.selectAll("g")
             .data(root.leaves())
             .enter().append("svg:g")
             .attr("class", "parent")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
-            .on("click",function (d) { return zoom(node == d.parent ? d : d.parent);});
-
-        parent.append("rect")
-            .attr("id",function(d,i) { return d.data.id; })
-            .attr("width", function(d) { return d.x1 - d.x0; })
-            .attr("height", function(d) { return d.y1 - d.y0; })
-            .attr("fill", function(d,i) { return color(d.data.id); })
+            .on("click",function (d) { return zoom(node == d.parent && node.height != 0 ? d : d.parent);})
             .on("mouseover", function(d) {
                 d3.select(this).style('stroke', 'black');
             })
@@ -69,21 +64,75 @@ function tm(data,data_category)
                 d3.select(this).style('stroke', 'none');
             });
 
-        parent.append("title")
-            .text(function(d) { return d.data.name; });
+        parent.append("rect")
+            .attr("id",function(d,i) { return d.data.id; })
+            .attr("width", function(d) { return d.x1 - d.x0; })
+            .attr("height", function(d) { return d.y1 - d.y0; })
+            .attr("fill", function(d,i) { return color(d.parent.data.id); });
+/*            .on("mouseover", function(d) {
+                d3.select(this).style('stroke', 'black');
+            })
+            .on("mouseout", function (d) {
+                d3.select(this).style('stroke', 'none');
+            });*/
 
-        var cell = parent//.selectAll("g.parent")
-        //.data(root.leaves()).enter()
+        parent.append("title")
+            .text(function(d) { return d.parent.data.name; });
+
+            parent.append("g:image")
+                .attr("xlink:href", function(d){return d.data.thumbnail_link})
+                .attr("width", function(d){ return (d.x1 - d.x0) -1 ;})
+                .attr("height",function(d){ return (d.y1 - d.y0) -1 ;});
+                //.attr("opacity",0);
+
+
+    var grandparent = svg.selectAll("svg")
+        .data(root.children).enter().append("svg:g")
+        .attr("class", "grandparent")
+        .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+
+    grandparent.append("rect")
+        .attr("id",function(d,i) { return d.data.id; })
+        .attr("width", function(d) { return d.x1 - d.x0; })
+        .attr("height", function(d) { return d.y1 - d.y0; })
+        .attr("fill", function(d,i) { return color(d.data.id); })
+        .on("click",function (d) {return zoom(node == d.parent ? d : d.parent);})
+        .on("mouseover", function(d) {
+            d3.select(this).style('stroke', 'black');
+        })
+        .on("mouseout", function (d) {
+            d3.select(this).style('stroke', 'none');
+        });
+
+    grandparent.append("title")
+        .text(function(d) { return d.data.name; });
+
+    grandparent.append("clipPath")
+        .attr("id", function(d) { return "clip-" + d.data.id; })
+        .append("use")
+        .attr("xlink:href", function(d) { return "#" + d.data.id; });
+
+    grandparent.append("text")
+        .attr("clip-path", function(d) { return "url(#clip-" + d.data.id + ")"; })
+        .selectAll("tspan")
+        .data(function(d) { return d.data.name.split(/(?=[A-Z][^A-Z])/g); })
+        .enter().append("tspan")
+        .attr("x", 4)
+        .attr("y", function(d, i) { return 13 + i * 10; })
+        .text(function(d) { return d; });
+
+      /* var cell = svg.selectAll("g.parent")
+        .data(root.children).enter()
             .append("cell")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
             .attr("class", "cell");
             //.on("click",function (d) { return zoom(node == d.parent ? d : d.parent);});
 
         cell.append("rect")
-            .attr("id", function(d,i) { return d.parent.data.id; })
-            .attr("width", function(d) { return d.parent.x1 - d.parent.x0; })
-            .attr("height", function(d) { return d.parent.y1 - d.parent.y0; })
-            .attr("fill", function(d,i) { return color(d.parent.data.id); });
+            .attr("id", function(d,i) { return d.data.id; })
+            .attr("width", function(d) { return d.x1 - d.x0; })
+            .attr("height", function(d) { return d.y1 - d.y0; })
+            .attr("fill", function(d,i) { return color(d.data.id); });*/
            /* .on("mouseover", function(d) {
                 d3.select(this).style('stroke', 'black');
             })
@@ -163,15 +212,37 @@ function tm(data,data_category)
         t.select("text")
             .attr("x", function(d) { return kx * (d.x1 - d.x0) / 2; })
             .attr("y", function(d) { return ky * (d.y1 - d.y0) / 2; });
+
+        t.select("image")
+            .attr("width", function(d) { return kx * (d.x1 - d.x0) - 1; })
+            .attr("height", function(d) { return ky * (d.y1 - d.y0) - 1; });
+            //.attr("opacity",1);
             //.style("opacity", function(d) { return kx * (d.x1 - d.x0) > d.width ? 1 : 0; });
+
+        t.select("title")
+            .text(function(d) { return d.data.title; });
+
+
+
+
+        var t2 = svg.selectAll("g.grandparent").transition()
+            .duration(d3.event.altKey ? 7500 : 750)
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.y0) + ")"; });
+
+            t2.select("rect")
+                .attr("width", function(d) { return kx * (d.x1 - d.x0) - 1; })
+                .attr("height", function(d) { return ky * (d.y1 - d.y0) - 1; })
+                .attr("opacity",value.depth == 0 ? 1: 0);
+
+
 
 
             //Kod för att visa bild
-            d3.selectAll("g.parent")
+           /* d3.selectAll("g.parent")
                 .append("svg:image")
                 .attr("xlink:href", "https://i.ytimg.com/vi/gHZ1Qz0KiKM/default.jpg")
                 .attr("width", function(d){ return kx * (d.x1 - d.x0) -1 ;})
-                .attr("height",function(d){ return ky * (d.y1 - d.y0) -1 ;});
+                .attr("height",function(d){ return ky * (d.y1 - d.y0) -1 ;});*/
 
 
         node = value;
