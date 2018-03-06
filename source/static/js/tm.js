@@ -40,7 +40,8 @@ function tm(data,data_category)
     //create the root of the treemap where each item gets an id.
     var root = d3.hierarchy(formatted_data)
         .eachBefore(function (d) { d.data.id = (d.parent ? d.parent.data.id + "." : "") + d.data.name; })
-        .sum(function(d) { return d.children ? 0 : 1; })            //The area of the treemap rectangles is set to number of children
+        .sum(sumChildren)
+        //.sum(function(d) { return d.children ? 0 : 1; })            //The area of the treemap rectangles is set to number of children
         .sort(function(a, b) { return b.height - a.height || b.value - a.value; });
 
     //calculates the rectangles' dimensions based on the root
@@ -55,8 +56,9 @@ function tm(data,data_category)
             .enter().append("svg:g")
             .attr("class", "parent")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
-            .on("click",function (d) { 
-                return zoom(node == d.parent && node.height != 0 ? d : d.parent);})
+            .on("click",function (d) {
+                d3.selectAll("g.grandparent").raise();
+                return zoom(node == d.parent && d.depth != 2 ? d : d.parent.parent);})
             .on("mouseover", function(d) {
                 d3.select(this).style('stroke', 'black');
             })
@@ -91,16 +93,21 @@ function tm(data,data_category)
     //create a new class to cover the videos att the start
     //size based on number of children in each category
     var grandparent = svg.selectAll("svg")
-        .data(root.children).enter().append("svg:g")
-        .attr("class", "grandparent")
-        .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
-        .on("click",function (d) {return zoom(node == d.parent ? d : d.parent);})
-        .on("mouseover", function(d) {
-            d3.select(this).select("rect").style('stroke', 'black');
-        })
-        .on("mouseout", function (d) {
-            d3.select(this).select("rect").style('stroke', 'none');
-        });
+            .data(root.children).enter().append("svg:g")
+            .attr("class", "grandparent")
+            .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
+            .on("click",function (d) {
+                d3.selectAll("g.parent").raise();
+                zoom(node == d.parent ? d : d.parent);
+                /*treeMap(root.sum(sumSize));*/})
+
+            .on("mouseover", function(d) {
+                d3.select(this).select("rect").style('stroke', 'black');
+            })
+
+            .on("mouseout", function (d) {
+                d3.select(this).select("rect").style('stroke', 'none');
+            });
 
     //creates a rectangle for each category
     grandparent.append("rect")
@@ -170,7 +177,7 @@ function tm(data,data_category)
         x.domain([value.x0, value.x1]);
         y.domain([value.y0, value.y1]);
 
-        //console.log(value);
+        console.log(value);
 
         getCategory(value.data.name);
 
@@ -214,7 +221,6 @@ function tm(data,data_category)
 
 
 
-
             //Kod för att visa bild
            /* d3.selectAll("g.parent")
                 .append("svg:image")
@@ -227,6 +233,30 @@ function tm(data,data_category)
 
         d3.event.stopPropagation();
 
+    }
+
+    function changed(sum) {
+
+        //treeMap(root.sum(sum));
+
+        /*var c = svg.selectAll("g.parent").transition()
+            .duration(d3.event.altKey ? 7500 : 750)
+            .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.y0) + ")"; });
+
+            c.select("rect")
+            .attr("width", function(d) { return d.x1 - d.x0; })
+            .attr("height", function(d) { return d.y1 - d.y0; });*/
+    }
+
+
+    function sumChildren(d)
+    {
+        return d.children ? 0 : 1;
+    }
+
+    function sumSize(d)
+    {
+        return d.dislikes;
     }
 
 
