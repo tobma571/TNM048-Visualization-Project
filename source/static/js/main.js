@@ -45,7 +45,7 @@ function draw(US_category_id, CA_category_id, GB_category_id){
 	if(dataRead == true) {
     var USfiltered = filterData(USvideos, janClick, decClick);
 		wordcloud = new wordCloud(USfiltered, US_category_id, cat);
-		treeMap = new tm(USvideos,US_category_id);
+		treeMap = new tm(USfiltered,US_category_id);
 		dataRead = false;
 	}
 }
@@ -136,7 +136,6 @@ function reDrawWordCloud(category){
 }
 
 function clickUS() {
-  console.log("clickUS");
   USvids = true;
   CAvids = false;
   GBvids = false;
@@ -144,14 +143,12 @@ function clickUS() {
 }
 
 function clickCA() {
-  console.log("clickCA");
   USvids = false;
   CAvids = true;
   GBvids = false;
   reDraw();
 }
 function clickGB() {
-  console.log("clickGB");
   USvids = false;
   CAvids = false;
   GBvids = true;
@@ -159,29 +156,23 @@ function clickGB() {
 }
 
 function clickTime1() {
-  console.log("click1");
   janClick = false;
   decClick = false;
   reDraw();
 }
 function clickTime2() {
-  console.log("click2");
   janClick = true;
   decClick = false;
   reDraw();
 }
 function clickTime3() {
-  console.log("click3");
   janClick = false;
   decClick = true;
   reDraw();
 }
 
 function getCategory(category){
-  console.log(category);
-  console.log(US_category);
   cat = category;
-
   reDrawWordCloud(category);
 }
 

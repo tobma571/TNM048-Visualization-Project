@@ -2,8 +2,6 @@
 function wordCloud(data, 
 	category_id, category) {
 
-    console.log("drawing cloud");
-
     var div = '#word-cloud';
 
     var cloud = d3.layout.cloud();
@@ -39,7 +37,7 @@ function wordCloud(data,
     // Set arrays for translating words
     for (var i = 0; i < nrOfWords; i++) {
 
-        if(totWordRow < parentWidth+140) {
+        if(totWordRow < parentWidth) {
 
 
                 if(i > 0){
@@ -58,7 +56,7 @@ function wordCloud(data,
             totTextHeight = wordTranslationsY[i-1];
             wordTranslationsY[i] = wordSizes[i] + totTextHeight;
 
-            if(wordTranslationsY[i] > 300) {
+            if(wordTranslationsY[i] > 350) {
                 Warray.splice(i, Warray.length-i);
                 wordSizes.splice(i, wordSizes.length-i);
                 break;
@@ -78,12 +76,15 @@ function wordCloud(data,
 
     var layout = cloud
         .size([parentWidth, parentHeight])
+        // .words(Warray)
         .words(Warray.map(function(d) {
         return {text: d, size: 5, test: "haha"};
         }))
         .padding(5)
      // .rotate(function() { return ~~(Math.random() * 2) * 90; })
+        .rotate( function(d){ return 0; })
         .font("Impact")
+        .text(function(d){ return d.text; })
         .fontSize(function(d,i) { return wordSizes[i]; })
         .on("end", draw);
 
@@ -124,13 +125,11 @@ function wordCloud(data,
                 catID = d.id;
             } 
        })
-       // console.log(catID);
-       // console.log(category);
-       // console.log(tagData[0].category_id);
 
         // Concatinates the tags of chosen number of samples into a single string.
         for(let j = 0; j < tagData.length; j++) {
-             if(category == "categories" || tagData[j].category_id == catID){
+             if((category == "categories" || tagData[j].category_id == catID)
+                && tagData[j].tags.split('"|"') != "[none]"){
                 var cliptags = tagData[j].tags.split('"|"');
                 tagArray = tagArray.concat(cliptags);
              }
