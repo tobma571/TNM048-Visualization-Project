@@ -3,7 +3,41 @@ function tm(data,data_category)
 
     var div = '#treemap';
 
-    var smaller_data = data.slice(0,200);
+    var indexMap = {}; // Hashmap for tags
+    var viewMap = {};
+    // var keys = []; // Array to store keys to most frequent tags in descending order.
+    // console.log(data.length);
+
+    for(let i = data.length-1; i >= 0; i--) {
+
+        var video = data[i].video_id;
+
+            if(indexMap[video] === undefined) {
+                indexMap[video] = i;
+                viewMap[video] = data[i].views;
+            }
+            else {
+                data.splice(i,1);
+                // if(viewMap[video] < data[i].views){
+                //     // console.log(indexMap[video]);
+                //     data.splice(indexMap[video],1);
+                //     indexMap[video] = i;
+                // }
+                // else{
+                //     data.splice(i,1);
+                // }         
+            }         
+    }
+
+    // console.log(data.length);
+
+    var smaller_data = data.sort(function(a,b){ return a.views - b.views; });
+        smaller_data = smaller_data.slice(0,200);
+    
+        for(let i = 0; i < smaller_data.length; i++){
+            console.log(smaller_data[i].video_id);
+        }
+
     var categories = data_category.items;
 
     var parentWidth = $(div).width();
