@@ -52,6 +52,23 @@ function draw(US_category_id, CA_category_id, GB_category_id){
 
 // add a measure of popularity in data
 function transformData(data){
+
+  var indexMap = {}; // Hashmap for tags
+  var viewMap = {};
+
+  for(let i = data.length-1; i >= 0; i--) {
+
+      var video = data[i].video_id;
+
+          if(indexMap[video] === undefined) {
+              indexMap[video] = i;
+              viewMap[video] = data[i].views;
+          }
+          else {
+              data.splice(i,1);       
+          }         
+  }
+
 	data.forEach(function(d){
 		d.rating = Math.log2(d.views) + Math.log(d.likes/d.dislikes)
 			+ Math.log(d.comment_count); 

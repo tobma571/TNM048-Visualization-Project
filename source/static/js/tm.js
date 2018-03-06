@@ -3,7 +3,13 @@ function tm(data,data_category)
 
     var div = '#treemap';
 
-    var smaller_data = data.slice(0,200);
+    var smaller_data = data.sort(function(a,b){ return a.views - b.views; });
+        smaller_data = smaller_data.slice(0,200);
+    
+        for(let i = 0; i < smaller_data.length; i++){
+            console.log(smaller_data[i].video_id);
+        }
+
     var categories = data_category.items;
 
     var parentWidth = $(div).width();
