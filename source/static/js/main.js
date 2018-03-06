@@ -96,18 +96,21 @@ function reDraw(){
   }
   // check which dataset is selected right now
   if(USvids){
+    cat = "categories";
     var USfiltered = filterData(USvideos, janClick, decClick);
-    wordcloud = new wordCloud(USfiltered, US_category);
+    wordcloud = new wordCloud(USfiltered, US_category, cat);
     treeMap = new tm(USfiltered,US_category);
   }
   if(CAvids){
+    cat = "categories";
     var CAfiltered = filterData(CAvideos, janClick, decClick);
-    wordcloud = new wordCloud(CAfiltered, CA_category);
+    wordcloud = new wordCloud(CAfiltered, CA_category, cat);
     treeMap = new tm(CAfiltered,CA_category);
   }
   if(GBvids){
+    cat = "categories";
     var GBfiltered = filterData(GBvideos, janClick, decClick);
-    wordcloud = new wordCloud(GBfiltered, GB_category);
+    wordcloud = new wordCloud(GBfiltered, GB_category, cat);
     treeMap = new tm(GBfiltered,GB_category);
   }
 }
