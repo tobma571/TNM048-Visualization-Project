@@ -93,21 +93,28 @@ function tm(data,data_category)
     var grandparent = svg.selectAll("svg")
         .data(root.children).enter().append("svg:g")
         .attr("class", "grandparent")
-        .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+        .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
+        .on("click",function (d) {return zoom(node == d.parent ? d : d.parent);})
+        .on("mouseover", function(d) {
+            d3.select(this).select("rect").style('stroke', 'black');
+        })
+        .on("mouseout", function (d) {
+            d3.select(this).select("rect").style('stroke', 'none');
+        });
 
     //creates a rectangle for each category
     grandparent.append("rect")
         .attr("id",function(d,i) { return d.data.id; })
         .attr("width", function(d) { return d.x1 - d.x0; })
         .attr("height", function(d) { return d.y1 - d.y0; })
-        .attr("fill", function(d,i) { return color(d.data.id); })
-        .on("click",function (d) {return zoom(node == d.parent ? d : d.parent);})
+        .attr("fill", function(d,i) { return color(d.data.id); });
+        /*.on("click",function (d) {return zoom(node == d.parent ? d : d.parent);})
         .on("mouseover", function(d) {
             d3.select(this).style('stroke', 'black');
         })
         .on("mouseout", function (d) {
             d3.select(this).style('stroke', 'none');
-        });
+        });*/
 
     grandparent.append("title")
         .text(function(d) { return d.data.name; });
@@ -162,6 +169,8 @@ function tm(data,data_category)
         var dx = (value.x1 - value.x0), dy = (value.y1 - value.y0), kx = width/dx, ky = height/dy;
         x.domain([value.x0, value.x1]);
         y.domain([value.y0, value.y1]);
+
+        //console.log(value);
 
         getCategory(value.data.name);
 
