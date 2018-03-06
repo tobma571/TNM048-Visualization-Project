@@ -214,16 +214,6 @@
   },
   {
    "kind": "youtube#videoCategory",
-   "etag": "\"m2yskBQFythfE4irbTIeOgYYfBU/pUZOAC_s9sfiwar639qr_wAB-aI\"",
-   "id": "34",
-   "snippet": {
-    "channelId": "UCBR8-60-B28hp2BmDPdntcQ",
-    "title": "Comedy",
-    "assignable": false
-   }
-  },
-  {
-   "kind": "youtube#videoCategory",
    "etag": "\"m2yskBQFythfE4irbTIeOgYYfBU/Xb5JLhtyNRN3AQq021Ds-OV50Jk\"",
    "id": "35",
    "snippet": {
