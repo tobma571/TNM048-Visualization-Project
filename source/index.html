@@ -12,29 +12,17 @@
 
 <link rel="stylesheet" href="./static/css/style-sheet.css"> 
 
-<script type="text/javascript">
-function changeFilter() { 
-  var eID = document.getElementById("dropChange"); 
-  var dayVal = eID.options[eID.selectedIndex].value; 
-  var daytxt = eID.options[eID.selectedIndex].text; 
-  alert("Selected Item " + daytxt + ", Value " + dayVal); }
-</script>
+
 
 </head>
 <body>
-
-<script>
-function showDiv() {
-   document.getElementById('myDiv').style.display = "block";
-}
-</script>
 
 <div class="base">
   <!-- Navigation bar with dropdown menus-->
   <div class="navbar">
 
     <div class="chl">
-        <p id="CountryHeadline">Filter by Country</p>
+        <p id="CountryHeadline">Filter by Region</p>
     </div>
 
     <div class="thl">
@@ -64,21 +52,6 @@ function showDiv() {
     <h1 class="Headline">Youtube Trends</h1>
   </div> <!-- End navbar -->
 
-  <script>
-  $(document).ready(function(){
-    $('.dropdown-submenu a.test').on("click", function(e){
-      $(this).next('ul').toggle();
-      e.stopPropagation();
-      e.preventDefault();
-    });
-  });
-
-  function hej(){
-    console.log("sug en kuk");
-  }
-  </script>
-
-
 <!-- Div for headlines over treemap and wordcloud + infomodals! -->
 
   <div>
@@ -103,7 +76,7 @@ function showDiv() {
               </div>
               <div class="modal-body">
                 <p>The treemap displays the distribution of the most popular genres in youtube videos. 
-                  The largest box shows thereby the most pupular genre. By clicking one of the boxes....</p>
+                  The largest box shows thereby the most popular genre. By clicking one of the boxes....</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -155,13 +128,31 @@ function showDiv() {
     <div id="word-cloud"></div>
   </div>
 </div>
-   <!-- Lib 
 
-  <script src="./static/lib/jquery.min.js"></script>
-  <script src="./static/lib/bootstrap.min.js"></script> -->
+<script>
+function changeFilter() { 
+  var eID = document.getElementById("dropChange"); 
+  var dayVal = eID.options[eID.selectedIndex].value; 
+  var daytxt = eID.options[eID.selectedIndex].text; 
+  alert("Selected Item " + daytxt + ", Value " + dayVal); 
+}
+
+function showDiv() {
+   document.getElementById('myDiv').style.display = "block";
+}
+
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
+
+  <!-- Lib  -->
+
   <script src="./static/lib/d3.min.js"></script>
-<!--   <script src="./static/lib/d3.js"></script>-->
-
   <script src="https://d3js.org/topojson.v2.min.js"></script>
   <script src="./static/lib/queue.js"></script>
   <script src="./lib/d3-cloud-master/build/d3.layout.cloud.js"></script>
@@ -171,7 +162,6 @@ function showDiv() {
   <script src='./static/js/wordCloud.js' type='text/javascript'></script>
   <script src='./static/js/tm.js' type='text/javascript'></script>
   <script src='./static/js/main.js' type='text/javascript'></script>
-  <!-- <script src='./static/js/onClick.js' type='text/javascript'></script> -->
 
 </body>
 </html>
