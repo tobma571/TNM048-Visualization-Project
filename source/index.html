@@ -55,9 +55,6 @@
 <!-- Div for headlines over treemap and wordcloud + infomodals! -->
 
   <div>
-    <div class = "treeTextDiv">
-    <p id="treeText">Treemap</p>
-    </div>
       <!--   Information Button   -->
         <div id="InfoModal" class="treeInfo">
         <!-- Trigger the modal with a button -->
@@ -72,11 +69,11 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Treemap description:</h4>
+                <h4 class="modal-title">Tree Map description:</h4>
               </div>
               <div class="modal-body">
-                <p>The treemap displays the distribution of the most popular genres in youtube videos. 
-                  The largest box shows thereby the most popular genre. By clicking one of the boxes....</p>
+                <p>The Tree Map displays the distribution of genres among the 400 monthly most viewed YouTube videos. You can filter the results by region and time.
+                  By clicking one of the categories, the most viewed videos from this category are shown.  Once a category is chosen, the videos are sorted by most viewed, starting at the top left. Click anywhere inside the Tree Map to return to the previous view.</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -85,10 +82,10 @@
           </div>
         </div>
       </div>
+      <div class = "treeTextDiv">
+        <p id="treeText">Category Distribution Tree Map</p>
+      </div>
 
-    <div class = "tagTextDiv">
-    <p id="tagText">WordCloud</p>
-    </div>
       <!--   Information Button   -->
         <div id="InfoModal" class="tagInfo">
         <!-- Trigger the modal with a button -->
@@ -103,12 +100,12 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">WordCloud description:</h4>
+                <h4 class="modal-title">Tag Cloud Description:</h4>
               </div>
               <div class="modal-body-word">
-                <p>The wordcloud displays the most popular tags in the trending videos on youtube. 
-                  You can filter the results by country and time,
-                   and also by category, which is done by picking one in the Treemap to the left.</p>
+                <p>The Tag Cloud displays the most popular tags in the trending videos on youtube. 
+                  You can filter the results by country, time,
+                   and by category, by selecting a category in the Tree Map to the left.</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -116,6 +113,9 @@
             </div> 
           </div>
         </div>
+      </div>
+      <div class = "tagTextDiv">
+        <p id="tagText">Most Popular Tags</p>
       </div>
   </div>
 
@@ -139,6 +139,15 @@ function changeFilter() {
 
 function showDiv() {
    document.getElementById('myDiv').style.display = "block";
+}
+
+function replaceText(category){
+  if(category == "categories"){
+    document.getElementById('treeText').innerHTML = "Category Distribution TreeMap";
+  }
+  else{
+    document.getElementById('treeText').innerHTML = category;
+  }
 }
 
 $(document).ready(function(){

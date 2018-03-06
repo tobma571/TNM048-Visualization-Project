@@ -62,17 +62,17 @@ function transformData(data){
 
           if(indexMap[video] === undefined) {
               indexMap[video] = i;
-              viewMap[video] = data[i].views;
+              viewMap[video] = data[i].rating;
           }
           else {
               data.splice(i,1);       
           }         
   }
 
-	data.forEach(function(d){
-		d.rating = Math.log2(d.views) + Math.log(d.likes/d.dislikes)
-			+ Math.log(d.comment_count); 
-	})
+	// data.forEach(function(d){
+	// 	d.rating = (d.likes/d.dislikes);
+	// 		* (d.comment_count); 
+	// })
 	return data;
 }
 // filter data by month
@@ -191,5 +191,6 @@ function clickTime3() {
 function getCategory(category){
   cat = category;
   reDrawWordCloud(category);
+  replaceText(category);
 }
 

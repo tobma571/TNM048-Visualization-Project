@@ -25,7 +25,7 @@ margin: 0;
     font-family: Futura, Trebuchet MS, Arial, sans-serif;
   /*  font-family: "Times New Roman", Times, serif; */
     margin: auto;
-    position: relative; top: 5px; left: 485px;
+    position: relative; top: 5px; left: 380px;
     display: inline-block;
 }
 
@@ -70,11 +70,15 @@ margin: 0;
 #treeText {
     font-size: 25px; 
     color:white;
-    position: relative; top: 5px; left: 365px;
+    position: fixed; 
+    top: 90px; 
+    left: 63px;
     }
 
 .treeInfo {
-    position: relative; top: 0px; left: 368px;
+    position: relative; 
+    bottom: 3px; 
+    left: 20px;
     display: inline-block;
 }
 
@@ -85,11 +89,16 @@ margin: 0;
 #tagText {
     font-size: 25px; 
     color:white;
-    position: relative; top: 5px; left: 1075px;
+    position: fixed; 
+    top: 90px; 
+    left: 843px;
+    /*right: 200px;*/
     }
 
 .tagInfo {
-    position: relative; top: 0px; left: 1078px;
+    position: relative; 
+    bottom: 3px; 
+    left: 753px;
     display: inline-block;
 }
 

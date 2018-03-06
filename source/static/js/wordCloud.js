@@ -76,12 +76,10 @@ function wordCloud(data,
 
     var layout = cloud
         .size([parentWidth, parentHeight])
-        // .words(Warray)
         .words(Warray.map(function(d) {
-        return {text: d, size: 5, test: "haha"};
+        return {text: d, size: 5};
         }))
         .padding(5)
-     // .rotate(function() { return ~~(Math.random() * 2) * 90; })
         .rotate( function(d){ return 0; })
         .font("Impact")
         .text(function(d){ return d.text; })
@@ -116,15 +114,13 @@ function wordCloud(data,
     function tagFreq(tagData, category_id, category) {
         
         tagArray = [];
-       // noSamples = 1000;
-       // console.log(category_id.items[1].snippet.title);
-       var catID = category;
+        var catID = category;
 
-       category_id.items.forEach(function(d){
+        category_id.items.forEach(function(d){
             if(d.snippet.title == category){
                 catID = d.id;
             } 
-       })
+        })
 
         // Concatinates the tags of chosen number of samples into a single string.
         for(let j = 0; j < tagData.length; j++) {
