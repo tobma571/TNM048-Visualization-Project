@@ -103,7 +103,7 @@ function tm(data,data_category)
             .attr("class", "grandparent")
             .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
             .on("click",function (d) {
-                d3.selectAll("g.parent").raise();
+                d3.select(this).lower();
                 zoom(node == d.parent ? d : d.parent);
                 /*treeMap(root.sum(sumSize));*/})
 
@@ -183,7 +183,7 @@ function tm(data,data_category)
         x.domain([value.x0, value.x1]);
         y.domain([value.y0, value.y1]);
 
-        console.log(value);
+        //console.log(value);
 
         getCategory(value.data.name);
 
@@ -226,7 +226,7 @@ function tm(data,data_category)
                 .attr("opacity",value.depth == 0 ? 1: 0);
 
 
-
+        //value.depth == 1 ? d3.selectAll("g.parent").raise(): d3.selectAll("g.grandparent").raise();
             //Kod för att visa bild
            /* d3.selectAll("g.parent")
                 .append("svg:image")
